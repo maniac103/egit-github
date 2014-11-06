@@ -1152,32 +1152,30 @@ public class IssueService extends GitHubService {
 		return getAll(request);
 	}
 
-    /**
-     * Page search issues
-     *
-     * @param filterData
-     * @param size
-     * @return iterator over pages of issues
-     */
-    public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData,
-            int size) {
-        StringBuilder uri = new StringBuilder(SEGMENT_SEARCH + SEGMENT_ISSUES);
+	/**
+	 * Page search issues
+	 *
+	 * @param filterData
+	 * @param size
+	 * @return iterator over pages of issues
+	 */
+	public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData, int size) {
+		StringBuilder uri = new StringBuilder(SEGMENT_SEARCH + SEGMENT_ISSUES);
 
-        PagedRequest<Issue> request = createPagedRequest(PAGE_FIRST, size);
-        request.setUri(uri);
-        request.setType(SearchIssueContainer.class);
-        request.setParams(filterData);
+		PagedRequest<Issue> request = createPagedRequest(PAGE_FIRST, size);
+		request.setUri(uri);
+		request.setType(SearchIssueContainer.class);
+		request.setParams(filterData);
+		return createPageIterator(request);
+	}
 
-        return createPageIterator(request);
-    }
-
-    /**
-     * Page search issues
-     *
-     * @param filterData
-     * @return iterator over pages of issues
-     */
-    public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData) {
-        return pageSearchIssues(filterData, PAGE_SIZE);
-    }
+	/**
+	 * Page search issues
+	 *
+	 * @param filterData
+	 * @return iterator over pages of issues
+	 */
+	public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData) {
+		return pageSearchIssues(filterData, PAGE_SIZE);
+	}
 }
