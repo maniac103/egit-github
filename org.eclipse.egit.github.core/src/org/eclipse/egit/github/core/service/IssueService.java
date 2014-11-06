@@ -20,8 +20,6 @@ import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_SEARC
 import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_FIRST;
 import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_SIZE;
 
-import com.google.gson.reflect.TypeToken;
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -43,6 +41,8 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
 import org.eclipse.egit.github.core.client.PageIterator;
 import org.eclipse.egit.github.core.client.PagedRequest;
+
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Issue service class for listing, searching, and fetching {@link Issue}
@@ -169,6 +169,19 @@ public class IssueService extends GitHubService {
 		public List<SearchIssue> getResources() {
 			return issues;
 		}
+	}
+
+	private static class SearchIssueContainer implements
+            IResourceProvider<Issue> {
+
+	    private List<Issue> items;
+
+	    /**
+	     * @see org.eclipse.egit.github.core.IResourceProvider#getResources()
+	     */
+	    public List<Issue> getResources() {
+	        return items;
+	    }
 	}
 
 	/**
@@ -1138,4 +1151,33 @@ public class IssueService extends GitHubService {
 		request.setType(IssueContainer.class);
 		return getAll(request);
 	}
+
+    /**
+     * Page search issues
+     *
+     * @param filterData
+     * @param size
+     * @return iterator over pages of issues
+     */
+    public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData,
+            int size) {
+        StringBuilder uri = new StringBuilder(SEGMENT_SEARCH + SEGMENT_ISSUES);
+
+        PagedRequest<Issue> request = createPagedRequest(PAGE_FIRST, size);
+        request.setUri(uri);
+        request.setType(SearchIssueContainer.class);
+        request.setParams(filterData);
+
+        return createPageIterator(request);
+    }
+
+    /**
+     * Page search issues
+     *
+     * @param filterData
+     * @return iterator over pages of issues
+     */
+    public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData) {
+        return pageSearchIssues(filterData, PAGE_SIZE);
+    }
 }
