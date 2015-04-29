@@ -40,6 +40,12 @@ public class Authorization implements Serializable {
 
 	private String token;
 
+	private String tokenLastEight;
+
+	private String hashedToken;
+
+	private String fingerprint;
+
 	private String url;
 
 	/**
@@ -167,6 +173,36 @@ public class Authorization implements Serializable {
 	 */
 	public Authorization setToken(String token) {
 		this.token = token;
+		return this;
+	}
+
+	/**
+	 * @return tokenLastEight
+	 */
+	public String getTokenLastEight() {
+		return tokenLastEight;
+	}
+
+	/**
+	 * @return hashedToken
+	 */
+	public String getHashedToken() {
+		return hashedToken;
+	}
+
+	/**
+	 * @return fingerprint
+	 */
+	public String getFingerprint() {
+		return fingerprint;
+	}
+
+	/**
+	 * @param fingerprint
+	 * @return this authorization
+	 */
+	public Authorization setFingerprint(String fingerprint) {
+		this.fingerprint = fingerprint;
 		return this;
 	}
 
