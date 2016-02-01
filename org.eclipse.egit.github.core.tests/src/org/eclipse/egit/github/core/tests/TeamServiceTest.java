@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2015 GitHub Inc. and others
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Michael Mathews (Arizona Board of Regents) - (Bug: 447419)
+ *    			 Team Membership API implementation
  *****************************************************************************/
 package org.eclipse.egit.github.core.tests;
 
@@ -21,6 +23,7 @@ import java.util.Collections;
 
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.Team;
+import org.eclipse.egit.github.core.TeamMembership;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
 import org.eclipse.egit.github.core.client.GitHubResponse;
@@ -294,6 +297,56 @@ public class TeamServiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void removeMemberEmptyName() throws IOException {
 		service.removeMember(3, "");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getMembershipNullName() throws IOException {
+		service.getMembership(6, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getMembershipEmptyName() throws IOException {
+		service.getMembership(6, "");
+	}
+
+	@Test
+	public void getMembership() throws IOException {
+		service.getMembership(6, "tt");
+		GitHubRequest request = new GitHubRequest();
+		request.setUri("/teams/6/memberships/tt");
+		verify(client).get(request);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addMembershipNullName() throws IOException {
+		service.addMembership(6, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addMembershipEmptyName() throws IOException {
+		service.addMembership(6, "");
+	}
+
+	@Test
+	public void addMembership() throws IOException {
+		service.addMembership(6, "tt");
+		verify(client).put("/teams/6/memberships/tt", null, TeamMembership.class);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void removeMembershipNullName() throws IOException {
+		service.removeMembership(6, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void removeMembershipEmptyName() throws IOException {
+		service.removeMembership(6, "");
+	}
+
+	@Test
+	public void removeMembership() throws IOException {
+		service.removeMembership(6, "tt");
+		verify(client).delete("/teams/6/memberships/tt");
 	}
 
 	/**

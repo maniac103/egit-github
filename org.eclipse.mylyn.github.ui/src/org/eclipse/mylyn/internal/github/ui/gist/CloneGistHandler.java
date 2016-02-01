@@ -53,7 +53,7 @@ public class CloneGistHandler extends TaskDataHandler {
 
 	/**
 	 * Get gist name for task data used to create projects and Git repositories
-	 * 
+	 *
 	 * @param data
 	 * @return name
 	 */
@@ -82,8 +82,7 @@ public class CloneGistHandler extends TaskDataHandler {
 	}
 
 	private File getParentDirectory() {
-		String destinationDir = Activator.getDefault().getPreferenceStore()
-				.getString(UIPreferences.DEFAULT_REPO_DIR);
+		String destinationDir = RepositoryUtil.getDefaultRepositoryDir();
 		File parentDir = new File(destinationDir);
 		if (!parentDir.exists() || !parentDir.isDirectory())
 			parentDir = ResourcesPlugin.getWorkspace().getRoot()

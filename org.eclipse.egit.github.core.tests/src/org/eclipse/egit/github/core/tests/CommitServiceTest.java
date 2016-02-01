@@ -385,12 +385,14 @@ public class CommitServiceTest {
 		CommitStatus status = new CommitStatus();
 		status.setDescription("description");
 		status.setTargetUrl("http://target/url");
-		status.setState("success");
+		status.setState(CommitStatus.STATE_SUCCESS);
+		status.setContext("context");
 		service.createStatus(repo, "123", status);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("description", status.getDescription());
 		params.put("target_url", status.getTargetUrl());
 		params.put("state", status.getState());
+		params.put("context", status.getContext());
 		verify(client).post("/repos/o/n/statuses/123", params,
 				CommitStatus.class);
 	}
@@ -405,7 +407,8 @@ public class CommitServiceTest {
 		CommitStatus status = new CommitStatus();
 		status.setDescription("description");
 		status.setTargetUrl("http://target/url");
-		status.setState("success");
+		status.setState(CommitStatus.STATE_SUCCESS);
+		status.setContext("context");
 		service.createStatus(null, "123", status);
 	}
 
@@ -419,7 +422,8 @@ public class CommitServiceTest {
 		CommitStatus status = new CommitStatus();
 		status.setDescription("description");
 		status.setTargetUrl("http://target/url");
-		status.setState("success");
+		status.setState(CommitStatus.STATE_SUCCESS);
+		status.setContext("context");
 		service.createStatus(new RepositoryId("o", "n"), null, status);
 	}
 
@@ -433,7 +437,8 @@ public class CommitServiceTest {
 		CommitStatus status = new CommitStatus();
 		status.setDescription("description");
 		status.setTargetUrl("http://target/url");
-		status.setState("success");
+		status.setState(CommitStatus.STATE_SUCCESS);
+		status.setContext("context");
 		service.createStatus(new RepositoryId("o", "n"), "", status);
 	}
 
@@ -445,5 +450,21 @@ public class CommitServiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void createStatusNullStatus() throws IOException {
 		service.createStatus(new RepositoryId("o", "n"), "123", null);
+	}
+
+	/**
+	 * Create status
+	 *
+	 * @throws IOException
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void createStatusInvalidState() throws IOException {
+		RepositoryId repo = new RepositoryId("o", "n");
+		CommitStatus status = new CommitStatus();
+		status.setState("non-existing-state");
+		status.setDescription("description");
+		status.setTargetUrl("http://target/url");
+		status.setContext("context");
+		service.createStatus(repo, "123", status);
 	}
 }

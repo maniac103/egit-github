@@ -55,6 +55,7 @@ public class IssueTest {
 		assertNull(issue.getUser());
 		assertNotNull(issue.toString());
 		assertEquals(0, issue.getId());
+		assertNull(issue.getClosedBy());
 	}
 
 	/**
@@ -90,6 +91,7 @@ public class IssueTest {
 		assertEquals(user, issue.setUser(user).getUser());
 		assertNull(issue.setLabels(null).getLabels());
 		assertEquals(39, issue.setId(39).getId());
+		assertEquals("user", issue.setClosedBy(user).getClosedBy().getLogin());
 	}
 
 	/**

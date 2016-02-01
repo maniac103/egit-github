@@ -40,7 +40,7 @@ public class RepositoryTest {
 		assertNull(repo.getHomepage());
 		assertNull(repo.getHtmlUrl());
 		assertNull(repo.getLanguage());
-		assertNull(repo.getMasterBranch());
+		assertNull(repo.getDefaultBranch());
 		assertNull(repo.getMirrorUrl());
 		assertNull(repo.getName());
 		assertEquals(0, repo.getOpenIssues());
@@ -77,7 +77,7 @@ public class RepositoryTest {
 		assertEquals("home", repo.setHomepage("home").getHomepage());
 		assertEquals("html", repo.setHtmlUrl("html").getHtmlUrl());
 		assertEquals("java", repo.setLanguage("java").getLanguage());
-		assertEquals("master", repo.setMasterBranch("master").getMasterBranch());
+		assertEquals("master", repo.setDefaultBranch("master").getDefaultBranch());
 		assertEquals("project", repo.setName("project").getName());
 		assertEquals(20, repo.setOpenIssues(20).getOpenIssues());
 		User owner = new User().setLogin("owner");

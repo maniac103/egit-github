@@ -21,6 +21,7 @@ import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_SIZE;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.egit.github.core.User;
@@ -37,6 +38,14 @@ import org.eclipse.egit.github.core.client.PagedRequest;
  *      organization membership API documentation</a>
  */
 public class OrganizationService extends GitHubService {
+
+	/**
+	 * Filter for roles a member can have
+	 * @since 4.2
+	 */
+	public static enum RoleFilter {
+		all, admin, member
+	}
 
 	/**
 	 * Create organization service
@@ -156,19 +165,44 @@ public class OrganizationService extends GitHubService {
 	 * Get members of organization
 	 *
 	 * @param organization
+	 *          the name of the organization
 	 * @return list of all organization members
 	 * @throws IOException
 	 */
 	public List<User> getMembers(String organization) throws IOException {
+		return getMembers(organization, null);
+	}
+
+	/**
+	 * Get members of organization
+	 *
+	 * @param organization
+	 *          the name of the organization
+	 * @param roleFilter
+	 *          only return members matching the {@link RoleFilter}<br>
+	 *          To use this feature it is currently required to set the
+	 *          {@link org.eclipse.egit.github.core.service.GitHubService#ACCEPT_PREVIEW_IRONMAN
+	 *          application/vnd.github.ironman-preview+json} Accept header in the
+	 *          {@link GitHubClient#setHeaderAccept GitHubClient}
+	 * @return list of all organization members whose role matches the {@code roleFilter}
+	 * @throws IOException
+	 * @since 4.2
+	 */
+	public List<User> getMembers(String organization, RoleFilter roleFilter) throws IOException
+	{
 		if (organization == null)
 			throw new IllegalArgumentException("Organization cannot be null"); //$NON-NLS-1$
 		if (organization.length() == 0)
 			throw new IllegalArgumentException("Organization cannot be empty"); //$NON-NLS-1$
 
+		HashMap<String, String> params = new HashMap<String, String>();
+		if(roleFilter != null) params.put("role", roleFilter.toString());
+
 		StringBuilder uri = new StringBuilder(SEGMENT_ORGS);
 		uri.append('/').append(organization);
 		uri.append(SEGMENT_MEMBERS);
 		PagedRequest<User> request = createPagedRequest();
+		request.setParams(params);
 		request.setUri(uri);
 		request.setType(new TypeToken<List<User>>() {
 		}.getType());

@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2014 GitHub Inc. and others
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,10 +7,13 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Michael Mathews (Arizona Board of Regents) - (Bug: 447419)
+ *    			 Team Membership API implementation
  *****************************************************************************/
 package org.eclipse.egit.github.core.service;
 
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_MEMBERS;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_MEMBERSHIPS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_ORGS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REPOS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_TEAMS;
@@ -25,6 +28,7 @@ import java.util.Map;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.Team;
+import org.eclipse.egit.github.core.TeamMembership;
 import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
@@ -238,6 +242,49 @@ public class TeamService extends GitHubService {
 		StringBuilder uri = new StringBuilder(SEGMENT_TEAMS);
 		uri.append('/').append(id);
 		uri.append(SEGMENT_MEMBERS);
+		uri.append('/').append(user);
+		client.delete(uri.toString());
+	}
+
+	public TeamMembership getMembership(int id, String user) throws IOException {
+		if (user == null)
+			throw new IllegalArgumentException("User cannot be null"); //$NON-NLS-1$
+		if (user.length() == 0)
+			throw new IllegalArgumentException("User cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_TEAMS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_MEMBERSHIPS);
+		uri.append('/').append(user);
+
+		GitHubRequest request = createRequest();
+		request.setUri(uri);
+		request.setType(TeamMembership.class);
+		return (TeamMembership) client.get(request).getBody();
+	}
+
+	public TeamMembership addMembership(int id, String user) throws IOException {
+		if (user == null)
+			throw new IllegalArgumentException("User cannot be null"); //$NON-NLS-1$
+		if (user.length() == 0)
+			throw new IllegalArgumentException("User cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_TEAMS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_MEMBERSHIPS);
+		uri.append('/').append(user);
+		return client.put(uri.toString(), null, TeamMembership.class);
+	}
+
+	public void removeMembership(int id, String user) throws IOException {
+		if (user == null)
+			throw new IllegalArgumentException("User cannot be null"); //$NON-NLS-1$
+		if (user.length() == 0)
+			throw new IllegalArgumentException("User cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_TEAMS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_MEMBERSHIPS);
 		uri.append('/').append(user);
 		client.delete(uri.toString());
 	}

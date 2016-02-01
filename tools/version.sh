@@ -38,13 +38,8 @@ case "$1" in
 	shift
 	;;
 
---jgit=*)
-	J=${1##--jgit=}
-	shift
-	;;
-
 *)
-	echo >&2 "usage: $0 {--snapshot=0.n.0 | --release} [--jgit=0.n.0]"
+	echo >&2 "usage: $0 {--snapshot=0.n.0 | --release}"
 	exit 1
 esac
 done
@@ -95,36 +90,16 @@ next_version() {
 		' "$1"
 }
 
-EGIT_V=$(to_version "$V")
-EGIT_N=$(next_version "$EGIT_V")
-
-[ -z "$J" ] && J=$V
-JGIT_V=$(to_version "$J")
-JGIT_N=$(next_version "$JGIT_V")
+GITHUB_V=$(to_version "$V")
+GITHUB_N=$(next_version "$GITHUB_V")
 
 perl -pi~ -e '
 	s/^(Bundle-Version:\s*).*$/${1}'"$OSGI_V"'/;
-	s/(org.eclipse.egit.*;version=")[^"[(]*(")/${1}'"$EGIT_V"'${2}/;
-	s/(org.eclipse.egit.*;version="\[)[^"]*(\)")/${1}'"$EGIT_V,$EGIT_N"'${2}/;
-	s/(org.eclipse.mylyn.internal.github.*;version=")[^"[(]*(")/${1}'"$EGIT_V"'${2}/;
-	s/(org.eclipse.mylyn.internal.github.*;version="\[)[^"]*(\)")/${1}'"$EGIT_V,$EGIT_N"'${2}/;
-	s/(org.eclipse.jgit.*;version="\[)[^"]*(\)")/${1}'"$JGIT_V,$JGIT_N"'${2}/;
+	s/(org.eclipse.egit.github.*;version=")[^"[(]*(")/${1}'"$GITHUB_V"'${2}/;
+	s/(org.eclipse.egit.github.*;version="\[)[^"]*(\)")/${1}'"$GITHUB_V,$GITHUB_N"'${2}/;
+	s/(org.eclipse.mylyn.internal.github.*;version=")[^"[(]*(")/${1}'"$GITHUB_V"'${2}/;
+	s/(org.eclipse.mylyn.internal.github.*;version="\[)[^"]*(\)")/${1}'"$GITHUB_V,$GITHUB_N"'${2}/;
 	' $(git ls-files | egrep "META-INF/MANIFEST.MF|META-INF/SOURCE-MANIFEST.MF")
-
-perl -pi~ -e '
-	if ($ARGV ne $old_argv) {
-		$seen_version = 0;
-		$old_argv = $ARGV;
-	}
-	if ($seen_version < 4) {
-		$seen_version++ if (!/<\?xml/ &&
-		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
-	}
-	s/(feature="org.eclipse.egit.github.core" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	s/(feature="org.eclipse.mylyn.github.core" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	s/(feature="org.eclipse.mylyn.github.ui" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	s/(feature="org.eclipse.jgit" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
-	' org.eclipse.egit.mylyn-feature/feature.xml
 
 perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
@@ -135,8 +110,10 @@ perl -pi~ -e '
 		$seen_version = 1 if (!/<\?xml/ &&
 		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
 	}
-	s/(feature="org.eclipse.jgit" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
-	' $(git ls-files | grep feature.xml)
+	s/(feature="org.eclipse.egit.github.core" version=")[^"]*(")/${1}'"$GITHUB_V"'${2}/;
+	s/(feature="org.eclipse.mylyn.github.core" version=")[^"]*(")/${1}'"$GITHUB_V"'${2}/;
+	s/(feature="org.eclipse.mylyn.github.ui" version=")[^"]*(")/${1}'"$GITHUB_V"'${2}/;
+	' org.eclipse.mylyn.github-feature/feature.xml
 
 perl -pi~ -e '
 	s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
@@ -174,7 +151,6 @@ perl -pi~ -e '
 		$seen_version = 1 if
 		s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
 	}
-	s{<(jgit-version)>[^<]*</\1>}{<${1}>'"$J"'</${1}>};
 	' $(git ls-files | grep pom.*.xml)
 
 find . -name '*~' | xargs rm -f

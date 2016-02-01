@@ -1,12 +1,12 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
- *  All rights reserved. This program and the accompanying materials
- *  are made available under the terms of the Eclipse Public License v1.0
- *  which accompanies this distribution, and is available at
- *  http://www.eclipse.org/legal/epl-v10.html
+ * Copyright (c) 2015 Jon Ander Peñalba <jonander.penalba@gmail.com>.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- *  Contributors:
- *    Jason Tsay (GitHub Inc.) - initial API and implementation
+ * Contributors:
+ *    Jon Ander Peñalba - initial API and implementation
  *******************************************************************************/
 package org.eclipse.egit.github.core.event;
 
@@ -16,10 +16,11 @@ import org.eclipse.egit.github.core.Release;
 
 /**
  * ReleaseEvent payload model class.
+ * @since 4.2
  */
 public class ReleasePayload extends EventPayload implements Serializable {
 
-	private static final long serialVersionUID = -1542484896711583478L;
+	private static final long serialVersionUID = 3309944674574815351L;
 
 	private String action;
 
@@ -34,13 +35,12 @@ public class ReleasePayload extends EventPayload implements Serializable {
 
 	/**
 	 * @param action
-	 * @return this payload
+	 * @return this ReleasePayload
 	 */
 	public ReleasePayload setAction(String action) {
 		this.action = action;
 		return this;
 	}
-
 
 	/**
 	 * @return release
@@ -51,7 +51,7 @@ public class ReleasePayload extends EventPayload implements Serializable {
 
 	/**
 	 * @param release
-	 * @return this payload
+	 * @return this ReleasePayload
 	 */
 	public ReleasePayload setRelease(Release release) {
 		this.release = release;

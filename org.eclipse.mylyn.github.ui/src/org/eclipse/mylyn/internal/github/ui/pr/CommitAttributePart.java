@@ -165,8 +165,7 @@ public class CommitAttributePart extends AbstractTaskEditorSection {
 			return;
 		if (repository == null)
 			return;
-		RevWalk walk = new RevWalk(repository);
-		try {
+		try (RevWalk walk = new RevWalk(repository)) {
 			for (Object element : elements) {
 				String id = ((PullRequestCommitAdapter) element).getCommit()
 						.getSha();
@@ -198,8 +197,6 @@ public class CommitAttributePart extends AbstractTaskEditorSection {
 			}
 		} catch (IOException e) {
 			GitHubUi.logError(e);
-		} finally {
-			walk.release();
 		}
 	}
 

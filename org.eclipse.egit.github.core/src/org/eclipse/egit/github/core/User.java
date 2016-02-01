@@ -59,6 +59,8 @@ public class User implements Serializable {
 
 	private String avatarUrl;
 
+	private String bio;
+
 	private String blog;
 
 	private String company;
@@ -290,6 +292,22 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return bio
+	 */
+	public String getBio() {
+		return bio;
+	}
+
+	/**
+	 * @param bio
+	 * @return this user
+	 */
+	public User setBio(String bio) {
+		this.bio = bio;
+		return this;
+	}
+
+	/**
 	 * @return blog
 	 */
 	public String getBlog() {
@@ -339,7 +357,9 @@ public class User implements Serializable {
 
 	/**
 	 * @return gravatarId
+	 * @deprecated
 	 */
+	@Deprecated
 	public String getGravatarId() {
 		return gravatarId;
 	}
@@ -347,7 +367,9 @@ public class User implements Serializable {
 	/**
 	 * @param gravatarId
 	 * @return this user
+	 * @deprecated
 	 */
+	@Deprecated
 	public User setGravatarId(String gravatarId) {
 		this.gravatarId = gravatarId;
 		return this;

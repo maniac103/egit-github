@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2012 GitHub Inc.
+ *  Copyright (c) 2012, 2015 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -11,6 +11,7 @@
 package org.eclipse.egit.github.core;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.Date;
 
 import org.eclipse.egit.github.core.util.DateUtils;
@@ -47,6 +48,8 @@ public class CommitStatus implements Serializable {
 	private Date updatedAt;
 
 	private long id;
+
+	private String context;
 
 	private String description;
 
@@ -107,6 +110,22 @@ public class CommitStatus implements Serializable {
 	}
 
 	/**
+	 * @return context
+	 */
+	public String getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context
+	 * @return this status
+	 */
+	public CommitStatus setContext(final String context) {
+		this.context = context;
+		return this;
+	}
+
+	/**
 	 * @return description
 	 */
 	public String getDescription() {
@@ -132,10 +151,15 @@ public class CommitStatus implements Serializable {
 	/**
 	 * @param state
 	 * @return this status
+	 * throws {@link IllegalArgumentException} if state is invalid
 	 */
 	public CommitStatus setState(final String state) {
-		this.state = state;
-		return this;
+		if (STATE_ERROR.equals(state) || STATE_FAILURE.equals(state) || STATE_PENDING.equals(state)
+				|| STATE_SUCCESS.equals(state)) {
+			this.state = state;
+			return this;
+		}
+		throw new IllegalArgumentException(MessageFormat.format("Invalid state {0}", state));
 	}
 
 	/**

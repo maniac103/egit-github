@@ -417,6 +417,8 @@ public class CommitService extends GitHubService {
 			params.put("target_url", status.getTargetUrl());
 		if (status.getDescription() != null)
 			params.put("description", status.getDescription());
+		if (status.getContext() != null)
+			params.put("context", status.getContext());
 
 		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
 		uri.append('/').append(id);

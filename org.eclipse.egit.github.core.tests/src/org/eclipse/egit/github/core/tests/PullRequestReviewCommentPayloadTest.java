@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.eclipse.egit.github.core.CommitComment;
+import org.eclipse.egit.github.core.PullRequest;
 import org.eclipse.egit.github.core.event.PullRequestReviewCommentPayload;
 import org.junit.Test;
 
@@ -28,7 +29,9 @@ public class PullRequestReviewCommentPayloadTest {
 	@Test
 	public void defaultState() {
 		PullRequestReviewCommentPayload payload = new PullRequestReviewCommentPayload();
+		assertNull(payload.getAction());
 		assertNull(payload.getComment());
+		assertNull(payload.getPullRequest());
 	}
 
 	/**
@@ -38,6 +41,9 @@ public class PullRequestReviewCommentPayloadTest {
 	public void updateFields() {
 		PullRequestReviewCommentPayload payload = new PullRequestReviewCommentPayload();
 		CommitComment comment = new CommitComment();
+		PullRequest pullRequest = new PullRequest().setTitle("pull");
+		assertEquals("created", payload.setAction("created").getAction());
+		assertEquals(pullRequest, payload.setPullRequest(pullRequest).getPullRequest());
 		assertEquals(comment, payload.setComment(comment).getComment());
 	}
 }

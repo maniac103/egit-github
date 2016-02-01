@@ -68,7 +68,7 @@ public class Repository implements IRepositoryIdProvider, Serializable {
 
 	private String language;
 
-	private String masterBranch;
+	private String defaultBranch;
 
 	private String mirrorUrl;
 
@@ -389,18 +389,36 @@ public class Repository implements IRepositoryIdProvider, Serializable {
 	}
 
 	/**
-	 * @return masterBranch
+	 * @return defaultBranch
 	 */
+	public String getDefaultBranch() {
+		return defaultBranch;
+	}
+
+	/**
+	 * @param defaultBranch
+	 * @return this repository
+	 */
+	public Repository setDefaultBranch(String defaultBranch) {
+		this.defaultBranch = defaultBranch;
+		return this;
+	}
+
+	/**
+	 * @return masterBranch
+	*/
+	@Deprecated
 	public String getMasterBranch() {
-		return masterBranch;
+		return defaultBranch;
 	}
 
 	/**
 	 * @param masterBranch
 	 * @return this repository
 	 */
+	@Deprecated
 	public Repository setMasterBranch(String masterBranch) {
-		this.masterBranch = masterBranch;
+		this.defaultBranch = masterBranch;
 		return this;
 	}
 

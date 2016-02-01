@@ -47,6 +47,7 @@ public class GistTest {
 		assertNull(gist.getUpdatedAt());
 		assertNull(gist.getUrl());
 		assertNull(gist.getUser());
+		assertNull(gist.getOwner());
 		assertFalse(gist.isPublic());
 	}
 

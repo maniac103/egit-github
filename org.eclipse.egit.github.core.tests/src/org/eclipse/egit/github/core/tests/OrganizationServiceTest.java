@@ -16,12 +16,14 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
 import org.eclipse.egit.github.core.client.GitHubResponse;
 import org.eclipse.egit.github.core.service.OrganizationService;
+import org.eclipse.egit.github.core.service.OrganizationService.RoleFilter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -212,6 +214,46 @@ public class OrganizationServiceTest {
 		service.getMembers("group");
 		GitHubRequest request = new GitHubRequest();
 		request.setUri(Utils.page("/orgs/group/members"));
+		verify(client).get(request);
+	}
+
+	/**
+	 * Get members with role filter "all"
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	public void getMembersAll() throws IOException {
+		testMembersByRole(RoleFilter.all);
+	}
+
+	/**
+	 * Get members with role filter "all"
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	public void getMembersAdmin() throws IOException {
+		testMembersByRole(RoleFilter.admin);
+	}
+
+	/**
+	 * Get members with role filter "all"
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	public void getMembersMember() throws IOException {
+		testMembersByRole(RoleFilter.member);
+	}
+
+	private void testMembersByRole(RoleFilter roleFilter) throws IOException {
+		service.getMembers("group", roleFilter);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("role", roleFilter.toString());
+		GitHubRequest request = new GitHubRequest();
+		request.setParams(params);
+		request.setUri(Utils.page("/orgs/group/members?role=" + roleFilter.toString()));
 		verify(client).get(request);
 	}
 

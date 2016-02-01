@@ -61,11 +61,8 @@ public class CheckoutPullRequestHandler extends TaskDataHandler {
 
 	private RevCommit getBase(Repository repo, PullRequest request)
 			throws IOException {
-		RevWalk walk = new RevWalk(repo);
-		try {
+		try (RevWalk walk = new RevWalk(repo)) {
 			return walk.parseCommit(repo.resolve(request.getBase().getSha()));
-		} finally {
-			walk.release();
 		}
 	}
 

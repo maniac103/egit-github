@@ -81,7 +81,7 @@ public class RepositoryImportWizard extends Wizard implements IImportWizard {
 		IPreferenceStore store = org.eclipse.egit.ui.Activator.getDefault()
 				.getPreferenceStore();
 
-		String defaultRepoDir = store.getString(UIPreferences.DEFAULT_REPO_DIR);
+		String defaultRepoDir = RepositoryUtil.getDefaultRepositoryDir();
 		File directory = new File(new File(defaultRepoDir, repo.getOwner()),
 				repo.getName());
 

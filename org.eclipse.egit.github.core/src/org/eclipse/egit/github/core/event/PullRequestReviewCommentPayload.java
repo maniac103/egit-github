@@ -23,9 +23,29 @@ public class PullRequestReviewCommentPayload extends EventPayload implements
 
 	private static final long serialVersionUID = -2403658752886394741L;
 
+	private String action;
+
 	private CommitComment comment;
 
 	private PullRequest pullRequest;
+
+	/**
+	 * @return action
+	 * @since 4.1
+	 */
+	public String getAction() {
+		return action;
+	}
+
+	/**
+	 * @param action
+	 * @return this PullRequestReviewCommentPayload
+	 * @since 4.1
+	 */
+	public PullRequestReviewCommentPayload setAction(String action) {
+		this.action = action;
+		return this;
+	}
 
 	/**
 	 * @return comment
@@ -45,6 +65,7 @@ public class PullRequestReviewCommentPayload extends EventPayload implements
 
 	/**
 	 * @return pullRequest
+	 * @since 4.1
 	 */
 	public PullRequest getPullRequest() {
 		return pullRequest;
@@ -52,7 +73,8 @@ public class PullRequestReviewCommentPayload extends EventPayload implements
 
 	/**
 	 * @param pullRequest
-	 * @return this payload
+	 * @return this PullRequestReviewCommentPayload
+	 * @since 4.1
 	 */
 	public PullRequestReviewCommentPayload setPullRequest(PullRequest pullRequest) {
 		this.pullRequest = pullRequest;

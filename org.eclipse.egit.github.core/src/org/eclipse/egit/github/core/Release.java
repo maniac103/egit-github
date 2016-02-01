@@ -1,40 +1,55 @@
-/******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
- *  All rights reserved. This program and the accompanying materials
- *  are made available under the terms of the Eclipse Public License v1.0
- *  which accompanies this distribution, and is available at
- *  http://www.eclipse.org/legal/epl-v10.html
+/*******************************************************************************
+ * Copyright (c) 2015 Jon Ander Peñalba <jonander.penalba@gmail.com>.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- *  Contributors:
- *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
- *****************************************************************************/
+ * Contributors:
+ *    Jon Ander Peñalba - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.egit.github.core;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import org.eclipse.egit.github.core.util.DateUtils;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Release model class
+ * @since 4.2
  */
 public class Release implements Serializable {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = 6554996867712735406L;
+	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private String url;
+
+	private String htmlUrl;
+
+	private String assetsUrl;
+
+	private String uploadUrl;
+
+	private String tarballUrl;
+
+	private String zipballUrl;
+
+	private long id;
 
 	private String tagName;
+
+	private String targetCommitish;
 
 	private String name;
 
 	private String body;
 
-	private boolean draft;
+	@SerializedName("draft")
+	private boolean isDraft;
 
-	private boolean prerelease;
+	@SerializedName("prerelease")
+	private boolean isPrerelease;
 
 	private Date createdAt;
 
@@ -45,17 +60,113 @@ public class Release implements Serializable {
 	private List<Download> assets;
 
 	/**
+	 * @return url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url
+	 * @return this release
+	 */
+	public Release setUrl(String url) {
+		this.url = url;
+		return this;
+	}
+
+	/**
+	 * @return htmlUrl
+	 */
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
+
+	/**
+	 * @param htmlUrl
+	 * @return this release
+	 */
+	public Release setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
+		return this;
+	}
+
+	/**
+	 * @return assetsUrl
+	 */
+	public String getAssetsUrl() {
+		return assetsUrl;
+	}
+
+	/**
+	 * @param assetsUrl
+	 * @return this release
+	 */
+	public Release setAssetsUrl(String assetsUrl) {
+		this.assetsUrl = assetsUrl;
+		return this;
+	}
+
+	/**
+	 * @return uploadUrl
+	 */
+	public String getUploadUrl() {
+		return uploadUrl;
+	}
+
+	/**
+	 * @param uploadUrl
+	 * @return this release
+	 */
+	public Release setUploadUrl(String uploadUrl) {
+		this.uploadUrl = uploadUrl;
+		return this;
+	}
+
+	/**
+	 * @return tarballUrl
+	 */
+	public String getTarballUrl() {
+		return tarballUrl;
+	}
+
+	/**
+	 * @param tarballUrl
+	 * @return this release
+	 */
+	public Release setTarballUrl(String tarballUrl) {
+		this.tarballUrl = tarballUrl;
+		return this;
+	}
+
+	/**
+	 * @return zipballUrl
+	 */
+	public String getZipballUrl() {
+		return zipballUrl;
+	}
+
+	/**
+	 * @param zipballUrl
+	 * @return this release
+	 */
+	public Release setZipballUrl(String zipballUrl) {
+		this.zipballUrl = zipballUrl;
+		return this;
+	}
+
+	/**
 	 * @return id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id
-	 * @return this download
+	 * @return this release
 	 */
-	public Release setId(int id) {
+	public Release setId(long id) {
 		this.id = id;
 		return this;
 	}
@@ -77,6 +188,22 @@ public class Release implements Serializable {
 	}
 
 	/**
+	 * @return targetCommitish
+	 */
+	public String getTargetCommitish() {
+		return targetCommitish;
+	}
+
+	/**
+	 * @param targetCommitish
+	 * @return this release
+	 */
+	public Release setTargetCommitish(String targetCommitish) {
+		this.targetCommitish = targetCommitish;
+		return this;
+	}
+
+	/**
 	 * @return name
 	 */
 	public String getName() {
@@ -90,22 +217,6 @@ public class Release implements Serializable {
 	public Release setName(String name) {
 		this.name = name;
 		return this;
-	}
-
-	/**
-	 * @return author
-	 */
-	public User getAuthor() {
-		return author;
-	}
-
-	/**
-	 * @param author
-	 * @return this release
-	 */
-	public Release setAuthor(User author) {
-	    this.author = author;
-	    return this;
 	}
 
 	/**
@@ -125,42 +236,42 @@ public class Release implements Serializable {
 	}
 
 	/**
-	 * @return draft
+	 * @return isDraft
 	 */
 	public boolean isDraft() {
-	    return draft;
+		return isDraft;
 	}
 
 	/**
-	 * @param draft
+	 * @param isDraft
 	 * @return this release
 	 */
-	public Release setDraft(boolean draft) {
-	    this.draft = draft;
-	    return this;
+	public Release setDraft(boolean isDraft) {
+		this.isDraft = isDraft;
+		return this;
 	}
 
 	/**
-	 * @return prerelease
+	 * @return isPrerelease
 	 */
-	public boolean isPreRelease() {
-	    return prerelease;
+	public boolean isPrerelease() {
+		return isPrerelease;
 	}
 
 	/**
-	 * @param prerelease
+	 * @param isPrerelease
 	 * @return this release
 	 */
-	public Release setPreRelease(boolean prerelease) {
-	    this.prerelease = prerelease;
-	    return this;
+	public Release setPrerelease(boolean isPrerelease) {
+		this.isPrerelease = isPrerelease;
+		return this;
 	}
 
 	/**
-	 * @return creation date
+	 * @return createdAt
 	 */
 	public Date getCreatedAt() {
-		return DateUtils.clone(createdAt);
+		return createdAt;
 	}
 
 	/**
@@ -168,15 +279,15 @@ public class Release implements Serializable {
 	 * @return this release
 	 */
 	public Release setCreatedAt(Date createdAt) {
-		this.createdAt = DateUtils.clone(createdAt);
+		this.createdAt = createdAt;
 		return this;
 	}
 
 	/**
-	 * @return publish date
+	 * @return publishedAt
 	 */
 	public Date getPublishedAt() {
-		return DateUtils.clone(publishedAt);
+		return publishedAt;
 	}
 
 	/**
@@ -202,5 +313,21 @@ public class Release implements Serializable {
 	public Release setAssets(List<Download> assets) {
 	    this.assets = assets;
 	    return this;
+	}
+
+	/**
+	 * @return author
+	 */
+	public User getAuthor() {
+		return author;
+	}
+
+	/**
+	 * @param author
+	 * @return this release
+	 */
+	public Release setAuthor(User author) {
+		this.author = author;
+		return this;
 	}
 }

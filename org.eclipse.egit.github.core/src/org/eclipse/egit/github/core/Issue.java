@@ -61,6 +61,8 @@ public class Issue implements Serializable {
 
 	private User user;
 
+	private User closedBy;
+
 	/**
 	 * @return closedAt
 	 */
@@ -330,6 +332,22 @@ public class Issue implements Serializable {
 	 */
 	public Issue setUser(User user) {
 		this.user = user;
+		return this;
+	}
+
+	/**
+	 * @return closedBy
+	 */
+	public User getClosedBy() {
+		return closedBy;
+	}
+
+	/**
+	 * @param closedBy
+	 * @return this issue
+	 */
+	public Issue setClosedBy(User closedBy) {
+		this.closedBy = closedBy;
 		return this;
 	}
 

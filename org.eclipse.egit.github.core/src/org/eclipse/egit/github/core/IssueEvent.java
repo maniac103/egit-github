@@ -20,186 +20,289 @@ import org.eclipse.egit.github.core.util.DateUtils;
  */
 public class IssueEvent implements Serializable {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = -842754108817725707L;
+    /**
+    * Closed event
+    */
+    public static final String TYPE_CLOSED = "closed"; //$NON-NLS-1$
 
-	private Date createdAt;
+    /**
+    * Reopened event
+    */
+    public static final String TYPE_REOPENED = "reopened"; //$NON-NLS-1$
 
-	private Issue issue;
+    /**
+    * Subscribed event
+    */
+    public static final String TYPE_SUBSCRIBED = "subscribed"; //$NON-NLS-1$
 
-	private long id;
+    /**
+    * Merged event
+    */
+    public static final String TYPE_MERGED = "merged"; //$NON-NLS-1$
 
-	private String commitId;
+    /**
+    * Referenced event
+    */
+    public static final String TYPE_REFERENCED = "referenced"; //$NON-NLS-1$
 
-	private String event;
+    /**
+    * Mentioned event
+    */
+    public static final String TYPE_MENTIONED = "mentioned"; //$NON-NLS-1$
 
-	private String url;
+    /**
+    * Assigned event
+    */
+    public static final String TYPE_ASSIGNED = "assigned"; //$NON-NLS-1$
 
-	private User actor;
+    /**
+    * Unassigned event
+    */
+    public static final String TYPE_UNASSIGNED = "unassigned"; //$NON-NLS-1$
 
-	private User assignee;
+    /**
+    * Labeled event
+    */
+    public static final String TYPE_LABELED = "labeled"; //$NON-NLS-1$
 
-	private Label label;
+    /**
+    * Unlabeled event
+    */
+    public static final String TYPE_UNLABELED = "unlabeled"; //$NON-NLS-1$
 
-	private Milestone milestone;
+    /**
+    * Milestoned event
+    */
+    public static final String TYPE_MILESTONED = "milestoned"; //$NON-NLS-1$
 
-	/**
-	 * @return createdAt
-	 */
-	public Date getCreatedAt() {
-		return DateUtils.clone(createdAt);
-	}
+    /**
+    * Demilestoned event
+    */
+    public static final String TYPE_DEMILESTONED = "demilestoned"; //$NON-NLS-1$
 
-	/**
-	 * @param createdAt
-	 * @return this issue event
-	 */
-	public IssueEvent setCreatedAt(Date createdAt) {
-		this.createdAt = DateUtils.clone(createdAt);
-		return this;
-	}
+    /**
+    * Renamed event
+    */
+    public static final String TYPE_RENAMED = "renamed"; //$NON-NLS-1$
 
-	/**
-	 * @return issue
-	 */
-	public Issue getIssue() {
-		return issue;
-	}
+    /**
+    * Locked event
+    */
+    public static final String TYPE_LOCKED = "locked"; //$NON-NLS-1$
 
-	/**
-	 * @param issue
-	 * @return this issue event
-	 */
-	public IssueEvent setIssue(Issue issue) {
-		this.issue = issue;
-		return this;
-	}
+    /**
+    * Unlocked event
+    */
+    public static final String TYPE_UNLOCKED = "unlocked"; //$NON-NLS-1$
 
-	/**
-	 * @return id
-	 */
-	public long getId() {
-		return id;
-	}
+    /**
+    * HEAD ref deleted event
+    */
+    public static final String TYPE_HEAD_REF_DELETED = "head_ref_deleted"; //$NON-NLS-1$
 
-	/**
-	 * @param id
-	 * @return this issue event
-	 */
-	public IssueEvent setId(long id) {
-		this.id = id;
-		return this;
-	}
+    /**
+    * HEAD ref restored event
+    */
+    public static final String TYPE_HEAD_REF_RESTORED = "head_ref_restored"; //$NON-NLS-1$
 
-	/**
-	 * @return commitId
-	 */
-	public String getCommitId() {
-		return commitId;
-	}
+    /** serialVersionUID */
+    private static final long serialVersionUID = -842754108817725707L;
 
-	/**
-	 * @param commitId
-	 * @return this issue event
-	 */
-	public IssueEvent setCommitId(String commitId) {
-		this.commitId = commitId;
-		return this;
-	}
+    private long id;
 
-	/**
-	 * @return event
-	 */
-	public String getEvent() {
-		return event;
-	}
+    private String url;
 
-	/**
-	 * @param event
-	 * @return this issue event
-	 */
-	public IssueEvent setEvent(String event) {
-		this.event = event;
-		return this;
-	}
+    private User actor;
 
-	/**
-	 * @return url
-	 */
-	public String getUrl() {
-		return url;
-	}
+    private String commitId;
 
-	/**
-	 * @param url
-	 * @return this issue event
-	 */
-	public IssueEvent setUrl(String url) {
-		this.url = url;
-		return this;
-	}
+    private String event;
 
-	/**
-	 * @return actor
-	 */
-	public User getActor() {
-		return actor;
-	}
+    private Date createdAt;
 
-	/**
-	 * @param actor
-	 * @return this issue event
-	 */
-	public IssueEvent setActor(User actor) {
-		this.actor = actor;
-		return this;
-	}
+    private Label label;
 
-	/**
-	 * @return assignee
-	 */
-	public User getAssignee() {
-		return actor;
-	}
+    private User assignee;
 
-	/**
-	 * @param assignee
-	 * @return this issue event
-	 */
-	public IssueEvent setAssignee(User assignee) {
-		this.assignee = assignee;
-		return this;
-	}
+    private Milestone milestone;
 
-	/**
-	 * @return label
-	 */
-	public Label getLabel() {
-		return label;
-	}
+    private Rename rename;
 
-	/**
-	 * @param label
-	 * @return this issue event
-	 */
-	public IssueEvent setLabel(Label label) {
-		this.label = label;
-		return this;
-	}
+    private Issue issue;
 
-	/**
-	 * @return milestone
-	 */
-	public Milestone getMilestone() {
-		return milestone;
-	}
+    /**
+     * @return id
+     */
+    public long getId() {
+        return id;
+    }
 
-	/**
-	 * @param milestone
-	 * @return this issue event
-	 */
-	public IssueEvent setMilestone(Milestone milestone) {
-		this.milestone = milestone;
-		return this;
-	}
+    /**
+     * @param id
+     * @return this issue event
+     */
+    public IssueEvent setId(long id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
+     * @return url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url
+     * @return this issue event
+     */
+    public IssueEvent setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+
+    /**
+     * @return actor
+     */
+    public User getActor() {
+        return actor;
+    }
+
+    /**
+     * @param actor
+     * @return this issue event
+     */
+    public IssueEvent setActor(User actor) {
+        this.actor = actor;
+        return this;
+    }
+
+    /**
+     * @return commitId
+     */
+    public String getCommitId() {
+        return commitId;
+    }
+
+    /**
+     * @param commitId
+     * @return this issue event
+     */
+    public IssueEvent setCommitId(String commitId) {
+        this.commitId = commitId;
+        return this;
+    }
+
+    /**
+     * @return event
+     */
+    public String getEvent() {
+        return event;
+    }
+
+    /**
+     * @param event
+     * @return this issue event
+     */
+    public IssueEvent setEvent(String event) {
+        this.event = event;
+        return this;
+    }
+
+    /**
+    * @return createdAt
+    */
+    public Date getCreatedAt() {
+        return DateUtils.clone(createdAt);
+    }
+
+    /**
+    * @param createdAt
+    * @return this issue event
+    */
+    public IssueEvent setCreatedAt(Date createdAt) {
+        this.createdAt = DateUtils.clone(createdAt);
+        return this;
+    }
+
+    /**
+     * @return label
+     */
+    public Label getLabel() {
+        return label;
+    }
+
+    /**
+     * @param label
+     * @return this issue event
+     */
+    public IssueEvent setLabel(Label label) {
+        this.label = label;
+        return this;
+    }
+
+    /**
+     * @return actor
+     */
+    public User getAssignee() {
+        return assignee;
+    }
+
+    /**
+     * @param assignee
+     * @return this issue event
+     */
+    public IssueEvent setAssignee(User assignee) {
+        this.assignee = assignee;
+        return this;
+    }
+
+    /**
+     * @return milestone
+     */
+    public Milestone getMilestone() {
+        return milestone;
+    }
+
+    /**
+     * @param milestone
+     * @return this issue event
+     */
+    public IssueEvent setMilestone(Milestone milestone) {
+        this.milestone = milestone;
+        return this;
+    }
+
+    /**
+     * @return rename
+     */
+    public Rename getRename() {
+        return rename;
+    }
+
+    /**
+     * @param rename
+     * @return this issue event
+     */
+    public IssueEvent setRename(Rename rename) {
+        this.rename = rename;
+        return this;
+    }
+
+    /**
+    * @return issue
+    */
+    public Issue getIssue() {
+        return issue;
+    }
+
+    /**
+    * @param issue
+    * @return this issue event
+    */
+    public IssueEvent setIssue(Issue issue) {
+        this.issue = issue;
+        return this;
+    }
 }

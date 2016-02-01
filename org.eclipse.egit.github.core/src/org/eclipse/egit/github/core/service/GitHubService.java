@@ -32,19 +32,45 @@ import org.eclipse.egit.github.core.client.RequestException;
 public abstract class GitHubService {
 
 	/**
-	 * Accept header for full response
+	 * Accept header for raw response (only body)
 	 */
-	protected static final String ACCEPT_FULL = "application/vnd.github.beta.full+json"; //$NON-NLS-1$
+	public static final String ACCEPT_RAW = "application/vnd.github.v3.raw+json"; //$NON-NLS-1$
 
 	/**
-	 * Accept header for HTML response
+	 * Accept header for HTML response (only bodyHtml)
 	 */
-	protected static final String ACCEPT_HTML = "application/vnd.github.beta.html+json"; //$NON-NLS-1$
+	public static final String ACCEPT_HTML = "application/vnd.github.v3.html+json"; //$NON-NLS-1$
 
 	/**
-	 * Accept header for text response
+	 * Accept header for text response (only bodyText)
 	 */
-	protected static final String ACCEPT_TEXT = "application/vnd.github.beta.text+json"; //$NON-NLS-1$
+	public static final String ACCEPT_TEXT = "application/vnd.github.v3.text+json"; //$NON-NLS-1$
+
+	/**
+	 * Accept header for full response (body, bodyText and bodyHtml)
+	 */
+	public static final String ACCEPT_FULL = "application/vnd.github.v3.full+json"; //$NON-NLS-1$
+
+	/**
+	 * Accept header to use preview features of the 'ironman' release.
+	 * @see <a href="https://developer.github.com/changes">https://developer.github.com/changes</a>
+	 * @since 4.2
+	 */
+	public static final String ACCEPT_PREVIEW_IRONMAN = "application/vnd.github.ironman-preview+json"; //$NON-NLS-1$
+
+	/**
+	 * Accept header to use preview features of the 'loki' release.
+	 * @see <a href="https://developer.github.com/changes">https://developer.github.com/changes</a>
+	 * @since 4.2
+	 */
+	public static final String ACCEPT_PREVIEW_LOKI = "application/vnd.github.loki-preview+json"; //$NON-NLS-1$
+
+	/**
+	 * Accept header to use preview features of the 'drax' release.
+	 * @see <a href="https://developer.github.com/changes">https://developer.github.com/changes</a>
+	 * @since 4.2
+	 */
+	public static final String ACCEPT_PREVIEW_DRAX = "application/vnd.github.drax-preview+json"; //$NON-NLS-1$
 
 	/**
 	 * Client field
