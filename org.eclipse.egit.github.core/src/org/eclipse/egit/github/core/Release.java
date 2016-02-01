@@ -12,8 +12,10 @@ package org.eclipse.egit.github.core;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
+import org.eclipse.egit.github.core.util.DateUtils;
 
 /**
  * Release model class
@@ -279,7 +281,7 @@ public class Release implements Serializable {
 	 * @return this release
 	 */
 	public Release setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+		this.createdAt = DateUtils.clone(createdAt);
 		return this;
 	}
 
