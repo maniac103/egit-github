@@ -899,6 +899,27 @@ public class RepositoryService extends GitHubService {
 	}
 
 	/**
+	 * Get a single release in given repository
+	 *
+	 * @param repository
+	 * @param releaseId
+	 * @return release
+	 * @throws IOException
+	 */
+	public Release getRelease(IRepositoryIdProvider repository, long releaseId)
+			throws IOException {
+		String id = getId(repository);
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_RELEASES);
+		uri.append('/').append(releaseId);
+		GitHubRequest request = createRequest();
+		request.setType(Release.class);
+		request.setUri(uri);
+		return (Release) client.get(request).getBody();
+	}
+
+	/**
 	 * Get hooks for given repository
 	 *
 	 * @param repository
