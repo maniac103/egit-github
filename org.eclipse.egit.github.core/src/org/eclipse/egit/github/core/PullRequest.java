@@ -13,6 +13,7 @@ package org.eclipse.egit.github.core;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.google.gson.annotations.SerializedName;
 import org.eclipse.egit.github.core.util.DateUtils;
 
 /**
@@ -23,7 +24,15 @@ public class PullRequest implements Serializable {
 	/** serialVersionUID */
 	private static final long serialVersionUID = 7858604768525096763L;
 
+	public static final String MERGEABLE_STATE_CLEAN = "clean";
+	public static final String MERGEABLE_STATE_DIRTY = "dirty";
+	public static final String MERGEABLE_STATE_UNSTABLE = "unstable";
+	public static final String MERGEABLE_STATE_UNKNOWN = "unknown";
+
 	private boolean mergeable;
+
+	@SerializedName("mergeable_state")
+	private String mergeableState;
 
 	private boolean merged;
 
@@ -96,6 +105,22 @@ public class PullRequest implements Serializable {
 	 */
 	public PullRequest setMergeable(boolean mergeable) {
 		this.mergeable = mergeable;
+		return this;
+	}
+
+	/**
+	 * @return mergeableState
+	 */
+	public String getMergeableState() {
+		return mergeableState;
+	}
+
+	/**
+	 * @param mergeableState
+	 * @return this pull request
+	 */
+	public PullRequest setMergeableState(String mergeableState) {
+		this.mergeableState = mergeableState;
 		return this;
 	}
 
