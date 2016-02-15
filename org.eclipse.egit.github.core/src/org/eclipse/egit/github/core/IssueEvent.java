@@ -116,6 +116,8 @@ public class IssueEvent implements Serializable {
 
     private String commitId;
 
+    private String commitUrl;
+
     private String event;
 
     private Date createdAt;
@@ -191,6 +193,22 @@ public class IssueEvent implements Serializable {
      */
     public IssueEvent setCommitId(String commitId) {
         this.commitId = commitId;
+        return this;
+    }
+
+    /**
+     * @return commitUrl
+     */
+    public String getCommitUrl() {
+        return commitUrl;
+    }
+
+    /**
+     * @param commitUrl
+     * @return this issue event
+     */
+    public IssueEvent setCommitUrl(String commitUrl) {
+        this.commitUrl = commitUrl;
         return this;
     }
 
