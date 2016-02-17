@@ -83,6 +83,8 @@ public interface IGitHubConstants {
 	/** */
 	String SEGMENT_COLLABORATORS = "/collaborators"; //$NON-NLS-1$
 	/** */
+	String SEGMENT_CODE = "/code"; //$NON-NLS-1$
+	/** */
 	String SEGMENT_COMMENTS = "/comments"; //$NON-NLS-1$
 	/** */
 	String SEGMENT_CONTENTS= "/contents"; //$NON-NLS-1$

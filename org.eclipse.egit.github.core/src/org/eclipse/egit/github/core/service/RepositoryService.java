@@ -15,6 +15,7 @@ import static org.eclipse.egit.github.core.client.IGitHubConstants.PARAM_LANGUAG
 import static org.eclipse.egit.github.core.client.IGitHubConstants.PARAM_QUERY;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.PARAM_START_PAGE;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_BRANCHES;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_CODE;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_CONTRIBUTORS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_FORKS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_HOOKS;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.egit.github.core.CodeSearchResult;
 import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.IResourceProvider;
@@ -118,6 +120,19 @@ public class RepositoryService extends GitHubService {
 		 * @see org.eclipse.egit.github.core.IResourceProvider#getResources()
 		 */
 		public List<Repository> getResources() {
+			return items;
+		}
+	}
+
+	private static class CodeSearchContainer implements
+			IResourceProvider<CodeSearchResult> {
+
+		private List<CodeSearchResult> items;
+
+		/**
+		 * @see org.eclipse.egit.github.core.IResourceProvider#getResources()
+		 */
+		public List<CodeSearchResult> getResources() {
 			return items;
 		}
 	}
@@ -559,6 +574,47 @@ public class RepositoryService extends GitHubService {
 			queryBuilder.append(param.getKey()).append(':').append(param.getValue())
 					.append(' ');
 		return searchRepositories(queryBuilder.toString(), startPage);
+	}
+
+	/**
+	 * Search for code in repositories.
+	 *
+	 * @param query
+	 * @return code search result
+	 * @throws IOException
+	 */
+	public List<CodeSearchResult> searchCode(final String query)
+			throws IOException {
+		return searchCode(query, null);
+	}
+
+	/**
+	 * Search for code in repositories.
+	 *
+	 * @param query
+	 * @param queryParams
+	 * @return list of repositories
+	 * @throws IOException
+	 */
+	public List<CodeSearchResult> searchCode(final String query,
+			final Map<String, String> params) throws IOException {
+		if (query == null)
+			throw new IllegalArgumentException("Query cannot be null"); //$NON-NLS-1$
+		if (query.length() == 0)
+			throw new IllegalArgumentException("Query cannot be empty"); //$NON-NLS-1$
+
+		PagedRequest<CodeSearchResult> request = createPagedRequest();
+
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put(PARAM_QUERY, query);
+		if (params != null)
+			queryParams.putAll(params);
+
+		request.setParams(queryParams);
+
+		request.setUri(SEGMENT_SEARCH + SEGMENT_CODE);
+		request.setType(CodeSearchContainer.class);
+		return getAll(request);
 	}
 
 	/**
