@@ -948,4 +948,12 @@ public class GitHubClient {
 	public int getRequestLimit() {
 		return requestLimit;
 	}
+
+	public <V> PagedRequest<V> createPagedRequest(int start, int size) {
+		return new PagedRequest(start, size);
+	}
+
+	public <V> PageIterator<V> createPageIterator(PagedRequest<V> request) {
+		return new PageIterator(request, this);
+	}
 }

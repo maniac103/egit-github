@@ -134,7 +134,7 @@ public abstract class GitHubService {
 	 * @return request
 	 */
 	protected <V> PagedRequest<V> createPagedRequest(int start, int size) {
-		return new PagedRequest<V>(start, size);
+		return client.createPagedRequest(start, size);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public abstract class GitHubService {
 	 * @return iterator
 	 */
 	protected <V> PageIterator<V> createPageIterator(PagedRequest<V> request) {
-		return new PageIterator<V>(request, client);
+		return client.createPageIterator(request);
 	}
 
 	/**
