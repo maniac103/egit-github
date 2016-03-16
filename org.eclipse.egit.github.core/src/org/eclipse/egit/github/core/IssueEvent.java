@@ -263,7 +263,7 @@ public class IssueEvent implements Serializable {
     }
 
     /**
-     * @return actor
+     * @return assignee
      */
     public User getAssignee() {
         return assignee;
