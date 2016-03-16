@@ -22,6 +22,15 @@ public class PullRequestPayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = -8234504270587265625L;
 
+	public static final String ACTION_ASSIGN = "assigned";
+	public static final String ACTION_UNASSIGN = "unassigned";
+	public static final String ACTION_LABEL = "labeled";
+	public static final String ACTION_UNLABEL = "unlabeled";
+	public static final String ACTION_OPEN = "opened";
+	public static final String ACTION_CLOSE = "closed";
+	public static final String ACTION_REOPEN = "reopened";
+	public static final String ACTION_SYNCHRONIZE = "synchronized";
+
 	private String action;
 
 	private int number;

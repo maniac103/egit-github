@@ -19,6 +19,8 @@ public class WatchPayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = -1600566006173513492L;
 
+	public static final String ACTION_START = "started";
+
 	private String action;
 
 	/**

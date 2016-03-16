@@ -21,6 +21,8 @@ public class MemberPayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = -4261757812093447848L;
 
+	public static final String ACTION_ADD = "added";
+
 	private User member;
 
 	private String action;

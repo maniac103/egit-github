@@ -19,6 +19,9 @@ public class DeletePayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = -7571623946339106873L;
 
+	public static final String REF_TYPE_BRANCH = "branch";
+	public static final String REF_TYPE_TAG = "tag";
+
 	private String refType;
 
 	private String ref;

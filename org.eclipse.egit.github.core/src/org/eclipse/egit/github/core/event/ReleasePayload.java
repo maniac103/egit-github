@@ -22,6 +22,8 @@ public class ReleasePayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = 3309944674574815351L;
 
+	public static final String ACTION_PUBLISH = "published";
+
 	private String action;
 
 	private Release release;

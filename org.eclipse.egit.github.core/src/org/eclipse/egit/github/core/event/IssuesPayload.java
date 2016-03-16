@@ -13,6 +13,8 @@ package org.eclipse.egit.github.core.event;
 import java.io.Serializable;
 
 import org.eclipse.egit.github.core.Issue;
+import org.eclipse.egit.github.core.Label;
+import org.eclipse.egit.github.core.User;
 
 /**
  * IssuesEvent payload model class.
@@ -21,9 +23,21 @@ public class IssuesPayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = 3210795492806809443L;
 
+	public static final String ACTION_ASSIGN = "assigned";
+	public static final String ACTION_UNASSIGN = "unassigned";
+	public static final String ACTION_LABEL = "labeled";
+	public static final String ACTION_UNLABEL = "unlabeled";
+	public static final String ACTION_OPEN = "opened";
+	public static final String ACTION_CLOSE = "closed";
+	public static final String ACTION_REOPEN = "reopened";
+
 	private String action;
 
 	private Issue issue;
+
+	private User assignee;
+
+	private Label label;
 
 	/**
 	 * @return action
@@ -54,6 +68,38 @@ public class IssuesPayload extends EventPayload implements Serializable {
 	 */
 	public IssuesPayload setIssue(Issue issue) {
 		this.issue = issue;
+		return this;
+	}
+
+	/**
+	 * @return label
+	 */
+	public Label getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label
+	 * @return this IssuesPayload
+	 */
+	public IssuesPayload setLabel(Label label) {
+		this.label = label;
+		return this;
+	}
+
+	/**
+	 * @return issue
+	 */
+	public User getAssignee() {
+		return assignee;
+	}
+
+	/**
+	 * @param assignee
+	 * @return this IssuesPayload
+	 */
+	public IssuesPayload setAssignee(User assignee) {
+		this.assignee = assignee;
 		return this;
 	}
 }

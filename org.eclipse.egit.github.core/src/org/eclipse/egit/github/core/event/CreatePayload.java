@@ -19,6 +19,10 @@ public class CreatePayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = -7033027645721954674L;
 
+	public static final String REF_TYPE_REPO = "repository";
+	public static final String REF_TYPE_BRANCH = "branch";
+	public static final String REF_TYPE_TAG = "tag";
+
 	private String refType;
 
 	private String ref;

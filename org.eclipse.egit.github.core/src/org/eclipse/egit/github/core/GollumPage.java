@@ -20,6 +20,9 @@ public class GollumPage implements Serializable {
 	/** serialVersionUID */
 	private static final long serialVersionUID = -5841603600916978606L;
 
+	public static final String ACTION_CREATE = "created";
+	public static final String ACTION_EDIT = "edited";
+
 	private String pageName;
 
 	private String title;

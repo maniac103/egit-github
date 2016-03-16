@@ -23,6 +23,8 @@ public class PullRequestReviewCommentPayload extends EventPayload implements
 
 	private static final long serialVersionUID = -2403658752886394741L;
 
+	public static final String ACTION_CREATE = "created";
+
 	private String action;
 
 	private CommitComment comment;

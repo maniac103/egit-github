@@ -22,6 +22,8 @@ public class IssueCommentPayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = 2661548417314120170L;
 
+	public static final String ACTION_CREATE = "created";
+
 	private String action;
 
 	private Issue issue;

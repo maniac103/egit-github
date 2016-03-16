@@ -21,6 +21,9 @@ public class GistPayload extends EventPayload implements Serializable {
 
 	private static final long serialVersionUID = 8916400800708594462L;
 
+	public static final String ACTION_CREATE = "create";
+	public static final String ACTION_UPDATE = "update";
+
 	private String action;
 
 	private Gist gist;
