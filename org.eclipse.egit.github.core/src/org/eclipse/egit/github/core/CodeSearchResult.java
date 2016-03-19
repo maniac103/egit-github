@@ -14,6 +14,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.egit.github.core.util.DateUtils;
 
@@ -33,6 +34,7 @@ public class CodeSearchResult implements Serializable {
 	private String htmlUrl;
 	private Repository repository;
 	private double score;
+	private List<TextMatch> textMatches;
 
 	/**
 	 * @return name
@@ -81,5 +83,12 @@ public class CodeSearchResult implements Serializable {
 	 */
 	public Repository getRepository() {
 		return repository;
+	}
+
+	/**
+	 * @return textMatches
+	 */
+	public List<TextMatch> getTextMatches() {
+		return textMatches;
 	}
 }
