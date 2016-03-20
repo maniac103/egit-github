@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
@@ -118,7 +119,7 @@ public class StarService extends GitHubService {
 	 * @return request
 	 */
 	protected PagedRequest<Repository> createStarredRequest(String user,
-			int start, int size) {
+			Map<String, String> filterData, int start, int size) {
 		if (user == null)
 			throw new IllegalArgumentException("User cannot be null");
 		if (user.length() == 0) {
@@ -128,6 +129,7 @@ public class StarService extends GitHubService {
 		StringBuilder uri = new StringBuilder(SEGMENT_USERS);
 		uri.append('/').append(user);
 		uri.append(SEGMENT_STARRED);
+		request.setParams(filterData);
 		request.setUri(uri);
 		request.setType(new TypeToken<List<Repository>>() {
 		}.getType());
@@ -157,7 +159,20 @@ public class StarService extends GitHubService {
 	 * @throws IOException
 	 */
 	public List<Repository> getStarred(String user) throws IOException {
-		PagedRequest request = createStarredRequest(user,
+		return getStarred(user, null);
+	}
+
+	/**
+	 * Get repositories starred by the given user
+	 *
+	 * @param user
+	 * @param filterData
+	 * @return non-null but possibly empty list of repositories
+	 * @throws IOException
+	 */
+	public List<Repository> getStarred(String user, Map<String, String> filterData)
+			throws IOException {
+		PagedRequest request = createStarredRequest(user, filterData,
 				PAGE_FIRST, PAGE_SIZE);
 		return getAll(request);
 	}
@@ -170,7 +185,19 @@ public class StarService extends GitHubService {
 	 * @throws IOException
 	 */
 	public PageIterator<Repository> pageStarred(String user) {
-		return pageStarred(user, PAGE_SIZE);
+		return pageStarred(user, null, PAGE_SIZE);
+	}
+
+	/**
+	 * Page repositories being starred by given user
+	 *
+	 * @param user
+	 * @param filterData
+	 * @return page iterator
+	 * @throws IOException
+	 */
+	public PageIterator<Repository> pageStarred(String user, Map<String, String> filterData) {
+		return pageStarred(user, filterData, PAGE_SIZE);
 	}
 
 	/**
@@ -182,7 +209,21 @@ public class StarService extends GitHubService {
 	 * @throws IOException
 	 */
 	public PageIterator<Repository> pageStarred(String user, int size) {
-		return pageStarred(user, PAGE_FIRST, size);
+		return pageStarred(user, null, PAGE_FIRST, size);
+	}
+
+	/**
+	 * Page repositories being starred by given user
+	 *
+	 * @param user
+	 * @param filterData
+	 * @param size
+	 * @return page iterator
+	 * @throws IOException
+	 */
+	public PageIterator<Repository> pageStarred(String user, Map<String, String> filterData,
+			int size) {
+		return pageStarred(user, filterData, PAGE_FIRST, size);
 	}
 
 	/**
@@ -195,7 +236,22 @@ public class StarService extends GitHubService {
 	 * @throws IOException
 	 */
 	public PageIterator<Repository> pageStarred(String user, int start, int size) {
-		PagedRequest request = createStarredRequest(user, start, size);
+		return pageStarred(user, null, start, size);
+	}
+
+	/**
+	 * Page repositories being starred by given user
+	 *
+	 * @param user
+	 * @param filterData
+	 * @param start
+	 * @param size
+	 * @return page iterator
+	 * @throws IOException
+	 */
+	public PageIterator<Repository> pageStarred(String user, Map<String, String> filterData,
+			int start, int size) {
+		PagedRequest request = createStarredRequest(user, filterData, start, size);
 		return createPageIterator(request);
 	}
 
