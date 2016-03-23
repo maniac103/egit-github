@@ -63,6 +63,8 @@ public class Issue implements Serializable {
 
 	private User closedBy;
 
+	private boolean locked;
+
 	/**
 	 * @return closedAt
 	 */
@@ -348,6 +350,22 @@ public class Issue implements Serializable {
 	 */
 	public Issue setClosedBy(User closedBy) {
 		this.closedBy = closedBy;
+		return this;
+	}
+
+	/**
+	 * @return locked
+	 */
+	public boolean isLocked() {
+		return locked;
+	}
+
+	/**
+	 * @param id
+	 * @return this issue
+	 */
+	public Issue setLocked(boolean locked) {
+		this.locked = locked;
 		return this;
 	}
 

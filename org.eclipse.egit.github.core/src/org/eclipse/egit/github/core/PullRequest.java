@@ -92,6 +92,8 @@ public class PullRequest implements Serializable {
 
 	private User user;
 
+	private boolean locked;
+
 	/**
 	 * @return mergeable
 	 */
@@ -587,6 +589,23 @@ public class PullRequest implements Serializable {
 	 */
 	public PullRequest setAssignee(User assignee) {
 		this.assignee = assignee;
+		return this;
+	}
+
+
+	/**
+	 * @return locked
+	 */
+	public boolean isLocked() {
+		return locked;
+	}
+
+	/**
+	 * @param id
+	 * @return this issue
+	 */
+	public PullRequest setLocked(boolean locked) {
+		this.locked = locked;
 		return this;
 	}
 
