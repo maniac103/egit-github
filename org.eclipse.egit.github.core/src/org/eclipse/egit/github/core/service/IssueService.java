@@ -39,6 +39,7 @@ import org.eclipse.egit.github.core.SearchIssue;
 import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
+import org.eclipse.egit.github.core.client.GitHubResponse;
 import org.eclipse.egit.github.core.client.PageIterator;
 import org.eclipse.egit.github.core.client.PagedRequest;
 
@@ -174,6 +175,8 @@ public class IssueService extends GitHubService {
 	private static class SearchIssueContainer implements
             IResourceProvider<Issue> {
 
+	    private int totalCount;
+	    private boolean incompleteResults;
 	    private List<Issue> items;
 
 	    /**
@@ -1177,5 +1180,18 @@ public class IssueService extends GitHubService {
 	 */
 	public PageIterator<Issue> pageSearchIssues(Map<String, String> filterData) {
 		return pageSearchIssues(filterData, PAGE_SIZE);
+	}
+
+	public int getSearchIssueResultCount(Map<String, String> filterData) throws IOException {
+		StringBuilder uri = new StringBuilder(SEGMENT_SEARCH + SEGMENT_ISSUES);
+
+		PagedRequest<Issue> request = createPagedRequest(PAGE_FIRST, 1);
+		request.setUri(uri);
+		request.setType(SearchIssueContainer.class);
+		request.setParams(filterData);
+
+		GitHubResponse response = client.get(request);
+		SearchIssueContainer container = (SearchIssueContainer) response.getBody();
+		return container.totalCount;
 	}
 }
