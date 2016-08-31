@@ -57,7 +57,7 @@ public class Issue implements Serializable {
 
 	private String url;
 
-	private User assignee;
+	private List<User> assignees;
 
 	private User user;
 
@@ -306,18 +306,18 @@ public class Issue implements Serializable {
 	}
 
 	/**
-	 * @return assignee
+	 * @return assignees
 	 */
-	public User getAssignee() {
-		return assignee;
+	public List<User> getAssignees() {
+		return assignees;
 	}
 
 	/**
-	 * @param assignee
+	 * @param assignees
 	 * @return this issue
 	 */
-	public Issue setAssignee(User assignee) {
-		this.assignee = assignee;
+	public Issue setAssignees(List<User> assignees) {
+		this.assignees = assignees;
 		return this;
 	}
 

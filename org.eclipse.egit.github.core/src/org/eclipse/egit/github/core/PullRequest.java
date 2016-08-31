@@ -12,6 +12,7 @@ package org.eclipse.egit.github.core;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import org.eclipse.egit.github.core.util.DateUtils;
@@ -86,7 +87,7 @@ public class PullRequest implements Serializable {
 
 	private String url;
 
-	private User assignee;
+	private List<User> assignees;
 
 	private User mergedBy;
 
@@ -577,18 +578,18 @@ public class PullRequest implements Serializable {
 	}
 
 	/**
-	 * @return assignee
+	 * @return assignees
 	 */
-	public User getAssignee() {
-		return assignee;
+	public List<User> getAssignees() {
+		return assignees;
 	}
 
 	/**
-	 * @param assignee
+	 * @param assignees
 	 * @return this pull request
 	 */
-	public PullRequest setAssignee(User assignee) {
-		this.assignee = assignee;
+	public PullRequest setAssignees(List<User> assignees) {
+		this.assignees = assignees;
 		return this;
 	}
 
