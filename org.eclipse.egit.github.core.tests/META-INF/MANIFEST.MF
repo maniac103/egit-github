@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.egit.github.core.tests
-Bundle-Version: 4.3.0.qualifier
+Bundle-Version: 4.5.0.qualifier
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: com.google.gson;version="[1.6.0,3.0.0]",
  com.google.gson.reflect;version="[1.6.0,3.0.0)",
- org.eclipse.egit.github.core;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.client;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.event;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.service;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.util;version="[4.3.0,4.4.0)",
+ org.eclipse.egit.github.core;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.client;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.event;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.service;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.util;version="[4.5.0,4.6.0)",
  org.mockito;version="[1.8.4,2.0.0)",
  org.mockito.runners;version="[1.8.4,2.0.0)",
  org.mockito.stubbing;version="[1.8.4,2.0.0)"

@@ -160,7 +160,7 @@ public class IssueConnectorUi extends AbstractRepositoryConnectorUi {
 				} else if (user != null && project != null) {
 					Region region = createRegion(textOffset, matcher);
 					String url = GitHub.createGitHubUrl(user, project)
-							+ "/issues/issue/" + taskId;
+							+ "/issues/" + taskId;
 					hyperlinks.add(new URLHyperlink(region, url));
 				}
 			}

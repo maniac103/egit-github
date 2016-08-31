@@ -22,9 +22,15 @@ public class CommitComment extends Comment {
 
 	private int position = -1;
 
+	private int originalPosition;
+
 	private String commitId;
 
+	private String originalCommitId;
+
 	private String path;
+
+	private String diffHunk;
 
 	/**
 	 * @return line
@@ -59,6 +65,22 @@ public class CommitComment extends Comment {
 	}
 
 	/**
+	 * @return originalPosition
+	 */
+	public int getOriginalPosition() {
+		return originalPosition;
+	}
+
+	/**
+	 * @param originalPosition
+	 * @return this commit comment
+	 */
+	public CommitComment setOriginalPosition(int originalPosition) {
+		this.originalPosition = originalPosition;
+		return this;
+	}
+
+	/**
 	 * @return commitId
 	 */
 	public String getCommitId() {
@@ -75,6 +97,22 @@ public class CommitComment extends Comment {
 	}
 
 	/**
+	 * @return originalCommitId
+	 */
+	public String getOriginalCommitId() {
+		return originalCommitId;
+	}
+
+	/**
+	 * @param originalCommitId
+	 * @return this commit comment
+	 */
+	public CommitComment setOriginalCommitId(String originalCommitId) {
+		this.originalCommitId = originalCommitId;
+		return this;
+	}
+
+	/**
 	 * @return path
 	 */
 	public String getPath() {
@@ -87,6 +125,22 @@ public class CommitComment extends Comment {
 	 */
 	public CommitComment setPath(String path) {
 		this.path = path;
+		return this;
+	}
+
+	/**
+	 * @return diffHunk
+	 */
+	public String getDiffHunk() {
+		return diffHunk;
+	}
+
+	/**
+	 * @param diffHunk
+	 * @return this commit comment
+	 */
+	public CommitComment setDiffHunk(String diffHunk) {
+		this.diffHunk = diffHunk;
 		return this;
 	}
 }

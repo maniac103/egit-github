@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.mylyn.github.ui;singleton:=true
 Bundle-Activator: org.eclipse.mylyn.internal.github.ui.GitHubUi
-Bundle-Version: 4.3.0.qualifier
+Bundle-Version: 4.5.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -23,16 +23,16 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.mylyn.context.core;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.mylyn.monitor.core;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.mylyn.resources.ui;bundle-version="[3.7.0,4.0.0)"
-Export-Package: org.eclipse.mylyn.internal.github.ui;version="4.3.0";x-internal:=true,
- org.eclipse.mylyn.internal.github.ui.gist;version="4.3.0";x-internal:=true,
- org.eclipse.mylyn.internal.github.ui.issue;version="4.3.0";x-internal:=true
+Export-Package: org.eclipse.mylyn.internal.github.ui;version="4.5.0";x-internal:=true,
+ org.eclipse.mylyn.internal.github.ui.gist;version="4.5.0";x-internal:=true,
+ org.eclipse.mylyn.internal.github.ui.issue;version="4.5.0";x-internal:=true
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.egit.core;version="[4.0.0,5.0.0)",
  org.eclipse.egit.core.op;version="[4.0.0,5.0.0)",
- org.eclipse.egit.github.core;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.client;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.service;version="[4.3.0,4.4.0)",
- org.eclipse.egit.github.core.util;version="[4.3.0,4.4.0)",
+ org.eclipse.egit.github.core;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.client;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.service;version="[4.5.0,4.6.0)",
+ org.eclipse.egit.github.core.util;version="[4.5.0,4.6.0)",
  org.eclipse.egit.ui;version="[4.0.0,5.0.0)",
  org.eclipse.egit.ui.internal;version="[4.0.0,5.0.0)",
  org.eclipse.egit.ui.internal.branch;version="[4.0.0,5.0.0)",
@@ -47,7 +47,7 @@ Import-Package: org.eclipse.egit.core;version="[4.0.0,5.0.0)",
  org.eclipse.jgit.transport;version="[4.0.0,5.0.0)",
  org.eclipse.jgit.treewalk;version="[4.0.0,5.0.0)",
  org.eclipse.jgit.treewalk.filter;version="[4.0.0,5.0.0)",
- org.eclipse.mylyn.internal.github.core;version="[4.3.0,4.4.0)",
- org.eclipse.mylyn.internal.github.core.gist;version="[4.3.0,4.4.0)",
- org.eclipse.mylyn.internal.github.core.issue;version="[4.3.0,4.4.0)",
- org.eclipse.mylyn.internal.github.core.pr;version="[4.3.0,4.4.0)"
+ org.eclipse.mylyn.internal.github.core;version="[4.5.0,4.6.0)",
+ org.eclipse.mylyn.internal.github.core.gist;version="[4.5.0,4.6.0)",
+ org.eclipse.mylyn.internal.github.core.issue;version="[4.5.0,4.6.0)",
+ org.eclipse.mylyn.internal.github.core.pr;version="[4.5.0,4.6.0)"

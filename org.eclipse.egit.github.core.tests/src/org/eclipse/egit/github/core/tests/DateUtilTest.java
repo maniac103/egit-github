@@ -23,7 +23,7 @@ import org.junit.Test;
 /**
  * Unit tests of {@link DateUtils}
  */
-public class DateUtilTests {
+public class DateUtilTest {
 
 	/**
 	 * Test default constructor through anonymous sub-class

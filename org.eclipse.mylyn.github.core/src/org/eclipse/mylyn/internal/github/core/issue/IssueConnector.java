@@ -377,7 +377,7 @@ public class IssueConnector extends RepositoryConnector {
 	public String getRepositoryUrlFromTaskUrl(String taskFullUrl) {
 		if (taskFullUrl != null) {
 			Matcher matcher = Pattern.compile(
-					"(http://.+?)/issues/issue/([^/]+)").matcher(taskFullUrl); //$NON-NLS-1$
+					"(http://.+?)/issues/([^/]+)").matcher(taskFullUrl); //$NON-NLS-1$
 			if (matcher.matches())
 				return matcher.group(1);
 		}
@@ -388,7 +388,7 @@ public class IssueConnector extends RepositoryConnector {
 	public String getTaskIdFromTaskUrl(String taskFullUrl) {
 		if (taskFullUrl != null) {
 			Matcher matcher = Pattern
-					.compile(".+?/issues/issue/([^/]+)").matcher(taskFullUrl); //$NON-NLS-1$
+					.compile(".+?/issues/([^/]+)").matcher(taskFullUrl); //$NON-NLS-1$
 			if (matcher.matches())
 				return matcher.group(1);
 		}
@@ -397,7 +397,7 @@ public class IssueConnector extends RepositoryConnector {
 
 	@Override
 	public String getTaskUrl(String repositoryUrl, String taskId) {
-		return repositoryUrl + "/issues/issue/" + taskId; //$NON-NLS-1$
+		return repositoryUrl + "/issues/" + taskId; //$NON-NLS-1$
 	}
 
 	@Override
