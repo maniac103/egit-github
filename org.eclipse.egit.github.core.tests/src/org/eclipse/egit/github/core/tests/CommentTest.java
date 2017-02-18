@@ -38,6 +38,7 @@ public class CommentTest {
 		assertEquals(0, comment.getId());
 		assertNull(comment.getUpdatedAt());
 		assertNull(comment.getUrl());
+		assertNull(comment.getHtmlUrl());
 		assertNull(comment.getUser());
 	}
 
@@ -56,6 +57,7 @@ public class CommentTest {
 		assertEquals(new Date(2345), comment.setUpdatedAt(new Date(2345))
 				.getUpdatedAt());
 		assertEquals("http", comment.setUrl("http").getUrl());
+		assertEquals("http", comment.setHtmlUrl("http").getHtmlUrl());
 		User user = new User().setLogin("auser");
 		assertEquals(user, comment.setUser(user).getUser());
 	}
