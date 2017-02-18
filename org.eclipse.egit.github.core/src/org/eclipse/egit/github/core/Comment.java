@@ -37,6 +37,8 @@ public class Comment implements Serializable {
 
 	private String url;
 
+	private String htmlUrl;
+
 	private User user;
 
 	/**
@@ -148,6 +150,22 @@ public class Comment implements Serializable {
 	 */
 	public Comment setUrl(String url) {
 		this.url = url;
+		return this;
+	}
+
+	/**
+	 * @return htmlUrl
+	 */
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
+
+	/**
+	 * @param htmlUrl
+	 * @return this comment
+	 */
+	public Comment setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
 		return this;
 	}
 
