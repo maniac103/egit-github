@@ -155,7 +155,7 @@ public class Comment implements Serializable {
 
 	/**
 	 * @return htmlUrl
-     */
+	 */
 	public String getHtmlUrl() {
 		return htmlUrl;
 	}
@@ -163,7 +163,7 @@ public class Comment implements Serializable {
 	/**
 	 * @param htmlUrl
 	 * @return this comment
-     */
+	 */
 	public Comment setHtmlUrl(String htmlUrl) {
 		this.htmlUrl = htmlUrl;
 		return this;
