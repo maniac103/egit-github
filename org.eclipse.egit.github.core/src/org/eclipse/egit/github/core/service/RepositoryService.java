@@ -14,6 +14,7 @@ import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_UTF8;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.PARAM_LANGUAGE;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.PARAM_QUERY;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.PARAM_START_PAGE;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_ASSIGNEES;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_BRANCHES;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_CODE;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_CONTRIBUTORS;
@@ -51,6 +52,7 @@ import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.RepositoryHook;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.RepositoryTag;
+import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
 import org.eclipse.egit.github.core.client.PageIterator;
@@ -908,6 +910,26 @@ public class RepositoryService extends GitHubService {
 		PagedRequest<RepositoryTag> request = createPagedRequest();
 		request.setUri(uri);
 		request.setType(new TypeToken<List<RepositoryTag>>() {
+		}.getType());
+		return getAll(request);
+	}
+
+	/**
+	 * Get available assignees in this repository
+	 *
+	 * @param repository
+	 * @return list of potential assignees
+	 * @throws IOException
+	 */
+	public List<User> getAssignees(IRepositoryIdProvider repository)
+			throws IOException {
+		String id = getId(repository);
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_ASSIGNEES);
+		PagedRequest<User> request = createPagedRequest();
+		request.setUri(uri);
+		request.setType(new TypeToken<List<User>>() {
 		}.getType());
 		return getAll(request);
 	}
