@@ -11,31 +11,12 @@
  *******************************************************************************/
 package org.eclipse.egit.github.core.client;
 
-import static com.google.gson.stream.JsonToken.BEGIN_ARRAY;
-import static java.net.HttpURLConnection.HTTP_ACCEPTED;
-import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
-import static java.net.HttpURLConnection.HTTP_CONFLICT;
-import static java.net.HttpURLConnection.HTTP_CREATED;
-import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
-import static java.net.HttpURLConnection.HTTP_GONE;
-import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
-import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
-import static java.net.HttpURLConnection.HTTP_OK;
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.AUTH_TOKEN;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_UTF8;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.CONTENT_TYPE_JSON;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_API;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_DEFAULT;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_GISTS;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.PROTOCOL_HTTPS;
-import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_V3_API;
-import static org.eclipse.egit.github.core.service.GitHubService.ACCEPT_FULL;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
+import org.eclipse.egit.github.core.RequestError;
+import org.eclipse.egit.github.core.okhttp.OkHttpProvider;
+import org.eclipse.egit.github.core.util.EncodingUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -48,9 +29,28 @@ import java.net.URL;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import org.eclipse.egit.github.core.RequestError;
-import org.eclipse.egit.github.core.okhttp.OkHttpProvider;
-import org.eclipse.egit.github.core.util.EncodingUtils;
+import static com.google.gson.stream.JsonToken.BEGIN_ARRAY;
+import static java.net.HttpURLConnection.HTTP_ACCEPTED;
+import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
+import static java.net.HttpURLConnection.HTTP_CONFLICT;
+import static java.net.HttpURLConnection.HTTP_CREATED;
+import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
+import static java.net.HttpURLConnection.HTTP_GONE;
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
+import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_RESET;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.AUTH_TOKEN;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_UTF8;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.CONTENT_TYPE_JSON;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_API;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_DEFAULT;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_GISTS;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.PROTOCOL_HTTPS;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_V3_API;
+import static org.eclipse.egit.github.core.service.GitHubService.ACCEPT_FULL;
 
 /**
  * Client class for interacting with GitHub HTTP/JSON API.
@@ -532,6 +532,7 @@ public class GitHubClient {
 		case HTTP_OK:
 		case HTTP_CREATED:
 		case HTTP_ACCEPTED:
+		case HTTP_RESET:
 			return true;
 		default:
 			return false;
@@ -840,6 +841,30 @@ public class GitHubClient {
 		HttpURLConnection request = createPost(uri);
 		try {
 			return sendJson(request, params, type);
+		} finally {
+			if (request != null) {
+				request.disconnect();
+			}
+		}
+	}
+
+	/**
+	 * Put data to URI
+	 *
+	 * @param uri
+	 * @param params
+	 * @throws IOException
+	 */
+	public void put(final String uri, final Object params)
+			throws IOException {
+		HttpURLConnection request = createPut(uri);
+		try {
+			if (params != null)
+				sendParams(request, params);
+			final int code = request.getResponseCode();
+			updateRateLimits(request);
+			if (!isOk(code))
+			    throw new RequestException(parseError(getStream(request)), code);
 		} finally {
 			if (request != null) {
 				request.disconnect();
