@@ -91,4 +91,12 @@ public class Key implements Serializable {
 		this.url = url;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Key) {
+			return this.id == ((Key) other).id;
+		}
+		return false;
+	}
 }

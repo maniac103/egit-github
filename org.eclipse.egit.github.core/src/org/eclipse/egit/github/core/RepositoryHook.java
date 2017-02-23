@@ -167,4 +167,12 @@ public class RepositoryHook implements Serializable {
 		this.config = config;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof RepositoryHook) {
+			return this.id == ((RepositoryHook) other).id;
+		}
+		return false;
+	}
 }

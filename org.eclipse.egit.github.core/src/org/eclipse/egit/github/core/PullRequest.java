@@ -611,6 +611,14 @@ public class PullRequest implements Serializable {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if (other instanceof PullRequest) {
+			return this.id == ((PullRequest) other).id;
+		}
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return "Pull Request " + number; //$NON-NLS-1$
 	}

@@ -486,4 +486,12 @@ public class User implements Serializable {
 		this.plan = plan;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof User) {
+			return this.id == ((User) other).id;
+		}
+		return false;
+	}
 }

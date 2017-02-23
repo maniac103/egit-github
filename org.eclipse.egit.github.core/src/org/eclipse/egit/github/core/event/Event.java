@@ -268,4 +268,12 @@ public class Event implements Serializable {
 		this.id = id;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Event) {
+			return this.id.equals(((Event) other).id);
+		}
+		return false;
+	}
 }

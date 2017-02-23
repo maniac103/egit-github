@@ -209,4 +209,12 @@ public class CommitStatus implements Serializable {
 		this.creator = creator;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof CommitStatus) {
+			return this.id == ((CommitStatus) other).id;
+		}
+		return false;
+	}
 }

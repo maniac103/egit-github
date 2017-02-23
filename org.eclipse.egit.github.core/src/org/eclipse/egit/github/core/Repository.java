@@ -572,4 +572,12 @@ public class Repository implements IRepositoryIdProvider, Serializable {
 			return null;
 		return login + "/" + name; //$NON-NLS-1$
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Repository) {
+			return this.id == ((Repository) other).id;
+		}
+		return false;
+	}
 }

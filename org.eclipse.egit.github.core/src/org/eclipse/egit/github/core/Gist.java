@@ -279,4 +279,12 @@ public class Gist implements Serializable {
 		this.owner = user;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Gist) {
+			return this.id != null && this.id.equals(((Gist) other).id);
+		}
+		return false;
+	}
 }

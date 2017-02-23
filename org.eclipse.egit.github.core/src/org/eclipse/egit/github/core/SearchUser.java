@@ -118,4 +118,12 @@ public class SearchUser implements Serializable {
 	public int getPublicRepos() {
 		return publicRepoCount;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof SearchUser) {
+			return this.id != null && this.id.equals(((SearchUser) other).id);
+		}
+		return false;
+	}
 }

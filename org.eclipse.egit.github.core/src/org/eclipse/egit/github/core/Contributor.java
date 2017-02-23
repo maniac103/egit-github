@@ -168,4 +168,12 @@ public class Contributor implements Serializable {
 		this.url = url;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Contributor) {
+			return this.id == ((Contributor) other).id;
+		}
+		return false;
+	}
 }

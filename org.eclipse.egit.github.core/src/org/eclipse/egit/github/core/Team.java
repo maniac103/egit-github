@@ -128,4 +128,11 @@ public class Team implements Serializable {
 		return this;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Team) {
+			return this.id == ((Team) other).id;
+		}
+		return false;
+	}
 }

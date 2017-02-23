@@ -184,4 +184,12 @@ public class Download implements Serializable {
 		this.createdAt = DateUtils.clone(createdAt);
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Download) {
+			return this.id == ((Download) other).id;
+		}
+		return false;
+	}
 }

@@ -332,4 +332,12 @@ public class Release implements Serializable {
 		this.author = author;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Release) {
+			return this.id == ((Release) other).id;
+		}
+		return false;
+	}
 }

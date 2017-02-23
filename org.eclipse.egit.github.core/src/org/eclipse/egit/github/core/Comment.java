@@ -184,4 +184,12 @@ public class Comment implements Serializable {
 		this.user = user;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Comment) {
+			return this.id == ((Comment) other).id;
+		}
+		return false;
+	}
 }

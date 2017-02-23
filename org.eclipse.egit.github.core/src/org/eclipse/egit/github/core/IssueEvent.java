@@ -341,4 +341,12 @@ public class IssueEvent implements Serializable {
         this.issue = issue;
         return this;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof IssueEvent) {
+            return this.id == ((IssueEvent) other).id;
+        }
+	return false;
+    }
 }

@@ -107,4 +107,12 @@ public class Notification implements Serializable {
 		this.url = url;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Notification) {
+			return this.id.equals(((Notification) other).id);
+		}
+		return false;
+	}
 }

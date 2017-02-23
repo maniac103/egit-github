@@ -386,6 +386,14 @@ public class Issue implements Serializable {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Issue) {
+			return this.id == ((Issue) other).id;
+		}
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return "Issue " + number; //$NON-NLS-1$
 	}

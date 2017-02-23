@@ -39,4 +39,12 @@ public class Id implements Serializable {
 		this.id = id;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Id) {
+			return this.id != null && this.id.equals(((Id) other).id);
+		}
+		return false;
+	}
 }

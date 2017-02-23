@@ -221,4 +221,12 @@ public class Authorization implements Serializable {
 		this.url = url;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Authorization) {
+			return this.id == ((Authorization) other).id;
+		}
+		return false;
+	}
 }
