@@ -99,4 +99,9 @@ public class Key implements Serializable {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+	    return this.id;
+	}
 }

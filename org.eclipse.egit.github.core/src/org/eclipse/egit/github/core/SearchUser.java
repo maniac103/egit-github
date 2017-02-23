@@ -126,4 +126,9 @@ public class SearchUser implements Serializable {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return this.id != null ? this.id.hashCode() : 0;
+	}
 }

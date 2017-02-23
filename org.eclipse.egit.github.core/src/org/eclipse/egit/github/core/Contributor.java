@@ -176,4 +176,9 @@ public class Contributor implements Serializable {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return this.id;
+	}
 }

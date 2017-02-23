@@ -394,6 +394,11 @@ public class Issue implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		return Long.hashCode(this.id);
+	}
+
+	@Override
 	public String toString() {
 		return "Issue " + number; //$NON-NLS-1$
 	}

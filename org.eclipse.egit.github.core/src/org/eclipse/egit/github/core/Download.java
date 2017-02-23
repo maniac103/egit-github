@@ -192,4 +192,9 @@ public class Download implements Serializable {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return this.id;
+	}
 }

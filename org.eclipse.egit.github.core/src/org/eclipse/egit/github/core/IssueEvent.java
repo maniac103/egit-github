@@ -347,6 +347,11 @@ public class IssueEvent implements Serializable {
         if (other instanceof IssueEvent) {
             return this.id == ((IssueEvent) other).id;
         }
-	return false;
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(this.id);
     }
 }

@@ -217,4 +217,9 @@ public class CommitStatus implements Serializable {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return Long.hashCode(this.id);
+	}
 }

@@ -619,6 +619,11 @@ public class PullRequest implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		return Long.hashCode(this.id);
+	}
+
+	@Override
 	public String toString() {
 		return "Pull Request " + number; //$NON-NLS-1$
 	}
