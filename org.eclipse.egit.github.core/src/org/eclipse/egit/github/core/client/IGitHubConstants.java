@@ -141,6 +141,8 @@ public interface IGitHubConstants {
 	/** */
 	String SEGMENT_NETWORKS = "/networks"; //$NON-NLS-1$
 	/** */
+	String SEGMENT_NOTIFICATIONS = "/notifications"; //$NON-NLS-1$
+	/** */
 	String SEGMENT_ORGANIZATIONS = "/organizations"; //$NON-NLS-1$
 	/** */
 	String SEGMENT_MEMBERSHIPS = "/memberships"; //$NON-NLS-1$
@@ -188,6 +190,8 @@ public interface IGitHubConstants {
 	String SEGMENT_TEAMS = "/teams"; //$NON-NLS-1$
 	/** */
 	String SEGMENT_TEST = "/test"; //$NON-NLS-1$
+	/** */
+	String SEGMENT_THREADS = "/threads"; //$NON-NLS-1$
 	/** */
 	String SEGMENT_TREES = "/trees"; //$NON-NLS-1$
 	/** */

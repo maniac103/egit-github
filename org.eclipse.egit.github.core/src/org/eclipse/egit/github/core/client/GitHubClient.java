@@ -22,6 +22,7 @@ import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_RESET;
 import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.AUTH_TOKEN;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_UTF8;
@@ -532,6 +533,7 @@ public class GitHubClient {
 		case HTTP_OK:
 		case HTTP_CREATED:
 		case HTTP_ACCEPTED:
+		case HTTP_RESET:
 			return true;
 		default:
 			return false;
@@ -840,6 +842,30 @@ public class GitHubClient {
 		HttpURLConnection request = createPost(uri);
 		try {
 			return sendJson(request, params, type);
+		} finally {
+			if (request != null) {
+				request.disconnect();
+			}
+		}
+	}
+
+	/**
+	 * Put data to URI
+	 *
+	 * @param uri
+	 * @param params
+	 * @throws IOException
+	 */
+	public void put(final String uri, final Object params)
+			throws IOException {
+		HttpURLConnection request = createPut(uri);
+		try {
+			if (params != null)
+				sendParams(request, params);
+			final int code = request.getResponseCode();
+			updateRateLimits(request);
+			if (!isOk(code))
+			    throw new RequestException(parseError(getStream(request)), code);
 		} finally {
 			if (request != null) {
 				request.disconnect();
