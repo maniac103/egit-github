@@ -11,24 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.github.core.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.stream.JsonReader;
-import org.eclipse.egit.github.core.RequestError;
-import org.eclipse.egit.github.core.okhttp.OkHttpProvider;
-import org.eclipse.egit.github.core.util.EncodingUtils;
-
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.InflaterInputStream;
-
 import static com.google.gson.stream.JsonToken.BEGIN_ARRAY;
 import static java.net.HttpURLConnection.HTTP_ACCEPTED;
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
@@ -51,6 +33,25 @@ import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_GISTS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.PROTOCOL_HTTPS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_V3_API;
 import static org.eclipse.egit.github.core.service.GitHubService.ACCEPT_FULL;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.stream.JsonReader;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.InflaterInputStream;
+
+import org.eclipse.egit.github.core.RequestError;
+import org.eclipse.egit.github.core.okhttp.OkHttpProvider;
+import org.eclipse.egit.github.core.util.EncodingUtils;
 
 /**
  * Client class for interacting with GitHub HTTP/JSON API.
