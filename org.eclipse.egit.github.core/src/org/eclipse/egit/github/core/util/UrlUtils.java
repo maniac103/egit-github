@@ -10,7 +10,7 @@
  *****************************************************************************/
 package org.eclipse.egit.github.core.util;
 
-import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_ISO_8859_1;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_UTF8;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.HOST_DEFAULT;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SUFFIX_GIT;
 
@@ -100,28 +100,28 @@ public abstract class UrlUtils {
 	}
 
 	/**
-	 * URL-encode value using 'ISO-8859-1' character set
+	 * URL-encode value using 'UTF-8' character set
 	 *
 	 * @param value
 	 * @return encoded value
 	 */
 	public static String encode(final String value) {
 		try {
-			return URLEncoder.encode(value, CHARSET_ISO_8859_1);
+			return URLEncoder.encode(value, CHARSET_UTF8);
 		} catch (UnsupportedEncodingException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
 
 	/**
-	 * URL-decode value using 'ISO-8859-1' character set
+	 * URL-decode value using 'UTF-8' character set
 	 *
 	 * @param value
 	 * @return encoded value
 	 */
 	public static String decode(final String value) {
 		try {
-			return URLDecoder.decode(value, CHARSET_ISO_8859_1);
+			return URLDecoder.decode(value, CHARSET_UTF8);
 		} catch (UnsupportedEncodingException e) {
 			throw new IllegalArgumentException(e);
 		}
