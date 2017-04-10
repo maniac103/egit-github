@@ -77,6 +77,13 @@ public class PullRequestService extends GitHubService {
 	public static final String PR_STATE = "state"; //$NON-NLS-1$
 
 	/**
+	 * Merge methods for the {@link merge} method
+	 */
+	public static final String MERGE_METHOD_MERGE = "merge";
+	public static final String MERGE_METHOD_SQUASH = "squash";
+	public static final String MERGE_METHOD_REBASE = "rebase";
+
+	/**
 	 * Create pull request service
 	 */
 	public PullRequestService() {
@@ -372,15 +379,34 @@ public class PullRequestService extends GitHubService {
 	 */
 	public MergeStatus merge(IRepositoryIdProvider repository, int id,
 			String commitMessage) throws IOException {
+		return merge(repository, id, null);
+	}
+
+	/**
+	 * Merge given pull request
+	 *
+	 * @param repository
+	 * @param id
+	 * @param commitMessage
+	 * @param method
+	 * @return status of merge
+	 * @throws IOException
+	 */
+	public MergeStatus merge(IRepositoryIdProvider repository, int id,
+			String commitMessage, String method) throws IOException {
 		String repoId = getId(repository);
+		Map<Object, Object> params = new HashMap<Object, Object>();
 		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
 		uri.append('/').append(repoId);
 		uri.append(SEGMENT_PULLS);
 		uri.append('/').append(id);
 		uri.append(SEGMENT_MERGE);
-		return client.put(uri.toString(),
-				Collections.singletonMap("commit_message", commitMessage), //$NON-NLS-1$
-				MergeStatus.class);
+
+		params.put("commit_message", commitMessage); //$NON-NLS-1$
+		if (method != null) {
+			params.put("merge_method", method); //$NON-NLS-1$
+		}
+		return client.put(uri.toString(), params, MergeStatus.class);
 	}
 
 	/**
