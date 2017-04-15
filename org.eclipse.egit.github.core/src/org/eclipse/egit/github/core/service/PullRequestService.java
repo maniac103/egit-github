@@ -15,6 +15,7 @@ import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_COMMI
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_FILES;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_MERGE;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_PULLS;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REACTIONS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REPOS;
 import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_FIRST;
 import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_SIZE;
@@ -33,6 +34,7 @@ import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.MergeStatus;
 import org.eclipse.egit.github.core.PullRequest;
 import org.eclipse.egit.github.core.PullRequestMarker;
+import org.eclipse.egit.github.core.Reaction;
 import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
@@ -493,6 +495,22 @@ public class PullRequestService extends GitHubService {
 		return (CommitComment) client.get(request).getBody();
 	}
 
+	public List<Reaction> getCommentReactions(IRepositoryIdProvider repository,
+			long commentId) throws IOException {
+		String repoId = getId(repository);
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(repoId);
+		uri.append(SEGMENT_PULLS);
+		uri.append(SEGMENT_COMMENTS);
+		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
+		GitHubRequest request = createRequest();
+		request.setUri(uri);
+		request.setType(new TypeToken<List<Reaction>>() {
+		}.getType());
+		return (List<Reaction>) client.get(request).getBody();
+	}
+
 	/**
 	 * Create comment on given pull request
 	 *
@@ -576,5 +594,24 @@ public class PullRequestService extends GitHubService {
 		uri.append(SEGMENT_COMMENTS);
 		uri.append('/').append(commentId);
 		client.delete(uri.toString());
+	}
+
+	public Reaction addCommentReaction(IRepositoryIdProvider repository,
+			long commentId, String content) throws IOException {
+		String id = getId(repository);
+		if (content == null)
+			throw new IllegalArgumentException("Content cannot be null"); //$NON-NLS-1$
+		if (content.length() == 0)
+			throw new IllegalArgumentException("Content cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_PULLS);
+		uri.append(SEGMENT_COMMENTS);
+		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
+
+		return client.post(uri.toString(), Collections.singletonMap("content", content),
+				Reaction.class);
 	}
 }

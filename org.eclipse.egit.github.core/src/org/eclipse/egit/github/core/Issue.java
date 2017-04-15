@@ -65,6 +65,8 @@ public class Issue implements Serializable {
 
 	private boolean locked;
 
+	private Reactions reactions;
+
 	/**
 	 * @return closedAt
 	 */
@@ -383,6 +385,10 @@ public class Issue implements Serializable {
 	public Issue setId(long id) {
 		this.id = id;
 		return this;
+	}
+
+	public Reactions getReactions() {
+		return reactions;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ package org.eclipse.egit.github.core.service;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_COMMENTS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_COMMITS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_COMPARE;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REACTIONS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REPOS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_STATUSES;
 import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_FIRST;
@@ -21,6 +22,7 @@ import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_SIZE;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ import java.util.Map;
 import org.eclipse.egit.github.core.CommitComment;
 import org.eclipse.egit.github.core.CommitStatus;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
+import org.eclipse.egit.github.core.Reaction;
 import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.RepositoryCommitCompare;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -263,10 +266,26 @@ public class CommitService extends GitHubService {
 		uri.append('/').append(repoId);
 		uri.append(SEGMENT_COMMENTS);
 		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
 		GitHubRequest request = createRequest();
 		request.setUri(uri);
 		request.setType(CommitComment.class);
 		return (CommitComment) client.get(request).getBody();
+	}
+
+	public List<Reaction> getCommentReactions(IRepositoryIdProvider repository,
+			long commentId) throws IOException {
+		String repoId = getId(repository);
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(repoId);
+		uri.append(SEGMENT_COMMENTS);
+		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
+		GitHubRequest request = createRequest();
+		request.setUri(uri);
+		request.setType(new TypeToken<List<Reaction>>() {
+		}.getType());
+		return (List<Reaction>) client.get(request).getBody();
 	}
 
 	/**
@@ -330,6 +349,25 @@ public class CommitService extends GitHubService {
 		uri.append(SEGMENT_COMMENTS);
 		uri.append('/').append(commentId);
 		client.delete(uri.toString());
+	}
+
+	public Reaction addCommentReaction(IRepositoryIdProvider repository, long commentId,
+			String content) throws IOException {
+		String id = getId(repository);
+		if (content == null)
+			throw new IllegalArgumentException("Content cannot be null"); //$NON-NLS-1$
+		if (content.length() == 0)
+			throw new IllegalArgumentException("Content cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_COMMITS);
+		uri.append(SEGMENT_COMMENTS);
+		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
+
+		return client.post(uri.toString(), Collections.singletonMap("content", content),
+				Reaction.class);
 	}
 
 	/**

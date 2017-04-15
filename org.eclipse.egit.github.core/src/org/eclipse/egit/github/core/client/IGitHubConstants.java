@@ -155,6 +155,8 @@ public interface IGitHubConstants {
 	/** */
 	String SEGMENT_PULLS = "/pulls"; //$NON-NLS-1$
 	/** */
+	String SEGMENT_REACTIONS = "/reactions"; //$NON-NLS-1$
+	/** */
 	String SEGMENT_README = "/readme"; //$NON-NLS-1$
 	/** */
 	String SEGMENT_RECEIVED_EVENTS = "/received_events"; //$NON-NLS-1$

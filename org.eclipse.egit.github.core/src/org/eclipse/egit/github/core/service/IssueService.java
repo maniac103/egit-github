@@ -15,6 +15,7 @@ import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_COMME
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_EVENTS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_ISSUES;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_LEGACY;
+import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REACTIONS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_REPOS;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.SEGMENT_SEARCH;
 import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_FIRST;
@@ -23,6 +24,7 @@ import static org.eclipse.egit.github.core.client.PagedRequest.PAGE_SIZE;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,7 @@ import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.IssueEvent;
 import org.eclipse.egit.github.core.Label;
 import org.eclipse.egit.github.core.Milestone;
+import org.eclipse.egit.github.core.Reaction;
 import org.eclipse.egit.github.core.RepositoryIssue;
 import org.eclipse.egit.github.core.SearchIssue;
 import org.eclipse.egit.github.core.User;
@@ -351,6 +354,21 @@ public class IssueService extends GitHubService {
 		return (Issue) client.get(request).getBody();
 	}
 
+	public List<Reaction> getIssueReactions(IRepositoryIdProvider repository,
+			int issueNumber) throws IOException {
+		String repoId = getId(repository);
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(repoId);
+		uri.append(SEGMENT_ISSUES);
+		uri.append('/').append(issueNumber);
+		uri.append(SEGMENT_REACTIONS);
+		GitHubRequest request = createRequest();
+		request.setUri(uri);
+		request.setType(new TypeToken<List<Reaction>>() {
+		}.getType());
+		return (List<Reaction>) client.get(request).getBody();
+	}
+
 	/**
 	 * Get an issue's comments
 	 *
@@ -433,6 +451,22 @@ public class IssueService extends GitHubService {
 		request.setType(new TypeToken<List<Comment>>() {
 		}.getType());
 		return getAll(request);
+	}
+
+	public List<Reaction> getCommentReactions(IRepositoryIdProvider repository,
+			long commentId) throws IOException {
+		String repoId = getId(repository);
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(repoId);
+		uri.append(SEGMENT_ISSUES);
+		uri.append(SEGMENT_COMMENTS);
+		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
+		GitHubRequest request = createRequest();
+		request.setUri(uri);
+		request.setType(new TypeToken<List<Reaction>>() {
+		}.getType());
+		return (List<Reaction>) client.get(request).getBody();
 	}
 
 	/**
@@ -742,6 +776,24 @@ public class IssueService extends GitHubService {
 		return client.post(uri.toString(), params, Issue.class);
 	}
 
+	public Reaction addIssueReaction(IRepositoryIdProvider repository,
+			int issueNumber, String content) throws IOException {
+		String id = getId(repository);
+		if (content == null)
+			throw new IllegalArgumentException("Content cannot be null"); //$NON-NLS-1$
+		if (content.length() == 0)
+			throw new IllegalArgumentException("Content cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_ISSUES);
+		uri.append('/').append(issueNumber);
+		uri.append(SEGMENT_REACTIONS);
+
+		return client.post(uri.toString(), Collections.singletonMap("content", content),
+				Reaction.class);
+	}
+
 	/**
 	 * Create comment on specified issue number
 	 *
@@ -982,6 +1034,25 @@ public class IssueService extends GitHubService {
 		uri.append(SEGMENT_ISSUES).append(SEGMENT_COMMENTS);
 		uri.append('/').append(commentId);
 		client.delete(uri.toString());
+	}
+
+	public Reaction addCommentReaction(IRepositoryIdProvider repository,
+			long commentId, String content) throws IOException {
+		String id = getId(repository);
+		if (content == null)
+			throw new IllegalArgumentException("Content cannot be null"); //$NON-NLS-1$
+		if (content.length() == 0)
+			throw new IllegalArgumentException("Content cannot be empty"); //$NON-NLS-1$
+
+		StringBuilder uri = new StringBuilder(SEGMENT_REPOS);
+		uri.append('/').append(id);
+		uri.append(SEGMENT_ISSUES);
+		uri.append(SEGMENT_COMMENTS);
+		uri.append('/').append(commentId);
+		uri.append(SEGMENT_REACTIONS);
+
+		return client.post(uri.toString(), Collections.singletonMap("content", content),
+				Reaction.class);
 	}
 
 	/**

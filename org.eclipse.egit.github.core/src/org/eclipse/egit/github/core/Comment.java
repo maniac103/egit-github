@@ -41,6 +41,8 @@ public class Comment implements Serializable {
 
 	private User user;
 
+	private Reactions reactions;
+
 	/**
 	 * @return createdAt
 	 */
@@ -183,6 +185,10 @@ public class Comment implements Serializable {
 	public Comment setUser(User user) {
 		this.user = user;
 		return this;
+	}
+
+	public Reactions getReactions() {
+		return reactions;
 	}
 
 	@Override
