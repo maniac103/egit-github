@@ -191,6 +191,11 @@ public class Comment implements Serializable {
 		return reactions;
 	}
 
+	public Comment setReactions(Reactions reactions) {
+		this.reactions = reactions;
+		return this;
+	}
+
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof Comment) {

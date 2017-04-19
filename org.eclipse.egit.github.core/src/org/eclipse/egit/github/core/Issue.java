@@ -391,6 +391,11 @@ public class Issue implements Serializable {
 		return reactions;
 	}
 
+	public Issue setReactions(Reactions reactions) {
+		this.reactions = reactions;
+		return this;
+	}
+
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof Issue) {
